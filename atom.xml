@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2024-01-28T14:42:37.552Z</updated>
+  <updated>2024-01-29T00:50:11.611Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="http://example.com/2024/01/28/Notes-on-Stomatopod-s-visual-ability-1/"/>
     <id>http://example.com/2024/01/28/Notes-on-Stomatopod-s-visual-ability-1/</id>
     <published>2024-01-28T09:57:02.000Z</published>
-    <updated>2024-01-28T14:42:37.552Z</updated>
+    <updated>2024-01-29T00:50:11.611Z</updated>
     
     
       
@@ -37,7 +37,13 @@
     <category term="neuroscience" scheme="http://example.com/categories/neuroscience/"/>
     
     
-    <category term="-mantis shrimp -vision -neuroscience -note" scheme="http://example.com/tags/mantis-shrimp-vision-neuroscience-note/"/>
+    <category term="mantis shrimp" scheme="http://example.com/tags/mantis-shrimp/"/>
+    
+    <category term="vision" scheme="http://example.com/tags/vision/"/>
+    
+    <category term="neuroscience" scheme="http://example.com/tags/neuroscience/"/>
+    
+    <category term="note" scheme="http://example.com/tags/note/"/>
     
   </entry>
   
