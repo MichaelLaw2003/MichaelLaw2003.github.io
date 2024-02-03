@@ -49,4 +49,68 @@
 <p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
 ]]></content>
   </entry>
+  <entry>
+    <title>Notes on Stomatopod&#39;s visual ability: 2</title>
+    <url>/2024/02/03/Notes-on-Stomatopod-s-visual-ability-2/</url>
+    <content><![CDATA[<h1 id="Notes-on-Stomatopod’s-visual-ability-2"><a href="#Notes-on-Stomatopod’s-visual-ability-2" class="headerlink" title="Notes on Stomatopod’s visual ability: 2"></a>Notes on Stomatopod’s visual ability: 2</h1><h2 id="Terms-and-abbreviations"><a href="#Terms-and-abbreviations" class="headerlink" title="Terms and abbreviations"></a>Terms and abbreviations</h2><table>
+<thead>
+<tr>
+<th>Abbreviation</th>
+<th>Term</th>
+<th>Description</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>MO[x]</td>
+<td>mid-band ommatidia(中带复眼)</td>
+<td>Basic units of a mid-band.</td>
+<td>There are 6 <strong>rows</strong> of midband eyes, designated as MO[1-6]. Each ommatidium in MO[1-4] has 3 tiers of rhabdom. Each ommatidium in MO[5,6] has 2 tiers of rhabdom. A  hemispherical ommatidium has 2 tiers of rhabdom.</td>
+</tr>
+<tr>
+<td>R[x]</td>
+<td>Rhabdomeres(感杆）</td>
+<td>The elongated rod-like portion of the retinular cells, the subunit of the  rhabdom, containing closely spaced and longitudinal rows of microvilli and  pigment granules.</td>
+<td>There are 8 <strong>types</strong> of rhabdomeres, designated as R[1-8]. R8  cells consist the most distal tier of rhabdom in all types (midband and  hemispherical) of ommatidium.</td>
+</tr>
+<tr>
+<td>DR[x]</td>
+<td>Distally placed rhabdomeres（远端感杆）</td>
+<td>Rhabdomeres that consist the distally placed rhabdom in <strong>MO[1-4]</strong>, which is  placed between the R[8] rhabdom and the PR rhabdom.</td>
+<td>There are 7 <strong>types</strong> of DR, which are  R[1-7]. They are specially designated as DR[1-7].</td>
+</tr>
+<tr>
+<td>PR[x]</td>
+<td>Proximal placed rhabdomeres（近端感杆）</td>
+<td>Rhabdomeres that consist the proximally placed rhabdom in <strong>MO[1-4]</strong>, which  is placed at the proximal end, that is, close to the basement menbrane.</td>
+<td>There are 7 <strong>types</strong> of PR,  which are R[1-7]. They are specially  designated as PR[1-7].</td>
+</tr>
+<tr>
+<td>F[x]</td>
+<td>Filter（滤光体）</td>
+<td>Specialized, coloured intra-rhabdomal structures in <strong>MO[2,3]</strong>, function as  the filter of light in a specific wavelength band.</td>
+<td>There are 2 <strong>layers</strong> of filters, designated as F[1], F[2]. F[1] is relatively distal and F[2] is relatively proximal.</td>
+</tr>
+</tbody></table>
+<h2 id="General-structures-of-hemispherical-ommatidia"><a href="#General-structures-of-hemispherical-ommatidia" class="headerlink" title="General structures of hemispherical ommatidia"></a>General structures of hemispherical ommatidia</h2><p><img src="/2024/02/03/Notes-on-Stomatopod-s-visual-ability-2/ommatidia1.svg" alt="Structure of hemispherical ommatidia"></p>
+<h2 id="General-structures-of-mid-band-ommatidia"><a href="#General-structures-of-mid-band-ommatidia" class="headerlink" title="General structures of  mid-band ommatidia"></a>General structures of  mid-band ommatidia</h2><h3 id="General-Structure-of-MO-1-4"><a href="#General-Structure-of-MO-1-4" class="headerlink" title="General Structure of MO[1-4]"></a>General Structure of MO[1-4]</h3><p>![midband ommatidia](Notes-on-Stomatopod-s-visual-ability-2&#x2F;midband ommatidia.svg)</p>
+<h3 id="Special-structures-of-MO-2-3-Filters"><a href="#Special-structures-of-MO-2-3-Filters" class="headerlink" title="Special structures of MO[2,3] - Filters"></a>Special structures of MO[2,3] - Filters</h3><p><img src="/2024/02/03/Notes-on-Stomatopod-s-visual-ability-2/filters.svg" alt="filters"></p>
+<h3 id="General-Structure-of-MO-5-6"><a href="#General-Structure-of-MO-5-6" class="headerlink" title="General Structure of MO[5,6]"></a>General Structure of MO[5,6]</h3><p>The General structure of MO[5,6] is similar to that of hemispherical ommatidia. However, the arrangement of microvillar in MO[5,6] are modified.</p>
+<ul>
+<li>Very thin layering with precise orthogonal arrangements in R[1-7];</li>
+<li>Unidirectionally arranged microvili in R[8];</li>
+<li>Elongated R[8] rhabdomere;</li>
+<li>A secondary orthogonality of the microvilli between MO[5,6].</li>
+</ul>
+]]></content>
+      <categories>
+        <category>neuroscience</category>
+      </categories>
+      <tags>
+        <tag>mantis shrimp</tag>
+        <tag>vision</tag>
+        <tag>neuroscience</tag>
+        <tag>note</tag>
+      </tags>
+  </entry>
 </search>

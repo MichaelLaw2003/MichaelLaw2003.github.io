@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2024-01-29T00:50:11.611Z</updated>
+  <updated>2024-02-03T09:25:41.592Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,37 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Notes on Stomatopod&#39;s visual ability: 2</title>
+    <link href="http://example.com/2024/02/03/Notes-on-Stomatopod-s-visual-ability-2/"/>
+    <id>http://example.com/2024/02/03/Notes-on-Stomatopod-s-visual-ability-2/</id>
+    <published>2024-02-03T09:21:49.000Z</published>
+    <updated>2024-02-03T09:25:41.592Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;Notes-on-Stomatopod’s-visual-ability-2&quot;&gt;&lt;a href=&quot;#Notes-on-Stomatopod’s-visual-ability-2&quot; class=&quot;headerlink&quot; title=&quot;Notes on</summary>
+        
+      
+    
+    
+    
+    <category term="neuroscience" scheme="http://example.com/categories/neuroscience/"/>
+    
+    
+    <category term="mantis shrimp" scheme="http://example.com/tags/mantis-shrimp/"/>
+    
+    <category term="vision" scheme="http://example.com/tags/vision/"/>
+    
+    <category term="neuroscience" scheme="http://example.com/tags/neuroscience/"/>
+    
+    <category term="note" scheme="http://example.com/tags/note/"/>
+    
+  </entry>
   
   <entry>
     <title> Notes on Stomatopod&#39;s visual ability: 1 </title>
