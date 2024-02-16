@@ -113,4 +113,50 @@
         <tag>note</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Notes on Stomatopod&#39;s visual ability 3</title>
+    <url>/2024/02/16/Notes-on-Stomatopod-s-visual-ability-3/</url>
+    <content><![CDATA[<h1 id="Notes-on-Stomatopod’s-visual-ability-3"><a href="#Notes-on-Stomatopod’s-visual-ability-3" class="headerlink" title="Notes on Stomatopod’s visual ability: 3"></a>Notes on Stomatopod’s visual ability: 3</h1><h2 id="Summary-of-the-structure-of-Stomatopod’s-eye"><a href="#Summary-of-the-structure-of-Stomatopod’s-eye" class="headerlink" title="Summary of the structure of Stomatopod’s eye"></a>Summary of the structure of Stomatopod’s eye</h2><h3 id="1"><a href="#1" class="headerlink" title="1"></a>1</h3><p>The compound eye of a Stomatopod is a hemispherical structure connected to an eye stalk.</p>
+<p>The compound eye consists of many ommatidia.</p>
+<p>Each ommatidia is mainly consists of</p>
+<ul>
+<li><p>a cornea (facet) on the surface,</p>
+</li>
+<li><p>a crystalline cone underneath the cornea,</p>
+</li>
+<li><p>distal pigment cells surrounding the crystalline cones,</p>
+</li>
+<li><p>retinular cells (photoreceptor cells) underneath the crystalline cone.</p>
+</li>
+</ul>
+<p>(Assume that the distal - proximal axis of an ommatidia is vertical, as is illustrated in <a href="https://michaellaw2003.github.io/2024/02/03/Notes-on-Stomatopod-s-visual-ability-2/">Notes on Stomatopod’s visual ability: 2</a> .)</p>
+<p>6 rows of special ommatidia divides the hemispherical compound eye into two parts, namely dorsal and ventral hemispheres (DH &amp; VH).</p>
+<p>These 6 rows of special ommatidia has larger cornea (facet), and are termed as mid-band ommatidia, designated as MO[1-6].</p>
+<p>The cell membranes of retinular cells extend and form rhabdomeres, and the rhabdomeres form a bundle structure termed rhabdom. The rhabdom functions as a light guide.</p>
+<p>The retinular cells are simply described as “rhabdom” in some documents.</p>
+<h3 id="2"><a href="#2" class="headerlink" title="2"></a>2</h3><p>There are 8 retinular cells in an ommatidia, whose shape and location are different to each other, designated as R[1-8].</p>
+<p>DH &amp; VH retinular cells are divided into two layers (based on the shape of the cross section imaging), namely distal end layer and proximal end layer. All the 8 retinular cells in an ommatidia are present at each layer (tier) .</p>
+<p>The distal end layer mainly consists of a single R[8] cell. The proximal end layer consists of R[1-7] cells, which form a flower-like ring structure, with the rhabdomeres at the center of the ring.</p>
+<p>The retinular cells of MO[1-4] are three layered, with a distal end layer similar to that of DH &amp; VH ommatidia, but the proximal end layer are divided into two sub-layers.</p>
+<p>All the R[1-7] cells are present in the two sub-layers at the proximal end. In MO[1,3,4], the R[1,4,5] cells are above the R[2,3,6,7], while in MO[2], the R[2,3,6,7] cells are above the R[1,4,5] cells.</p>
+<p>All the R[1-8] cells construct the retinula with both small distal projections (microvilli) in the rhabdom, and the axons connected to the optic nerve centers.</p>
+<p>The retinula of all the ommatidia consist retina.</p>
+<h2 id="Notes-on-connectivity-of-optic-neuropils"><a href="#Notes-on-connectivity-of-optic-neuropils" class="headerlink" title="Notes on connectivity of optic neuropils"></a>Notes on connectivity of optic neuropils</h2><p><strong>Lamina ganglionaris</strong> (lamina) and <strong>medulla externa</strong> (ME), <strong>medulla interna</strong>(MI), <strong>medulla terminalis</strong>(NT) in the eye rod are optic neuropils in Stomatopods.(Marshall et al., 2007)</p>
+<p>All optic neuropils have <strong>subdivisions</strong> reflecting subdivisions of the retina - DH, midband, VH.(Marshall et al., 2007)</p>
+<p>The axons of the photorecepters project to the lamina, forming synapses with lamina monopolar cells LMCs.(This conclusion is from a paper introducing butterfly, and thus may be inaccurate for mantis shrimps.) (Matsushita et al., 2022)</p>
+<p>On the way from basement membrane to the lamina, axons form <strong>fasicles</strong>, in which the arrangement of the axons twists 180°. The collection of axons and <strong>LMCs</strong> consists of a structure termed as the <strong>cartridge</strong>.(Marshall et al., 2007)</p>
+<p>In the image of the section at the level of the lamina, the lamina cartridge of MO[5,6] are ovoid in shape, the MO[1-4] rectangular, and DH&#x2F;VH hexagonal.(Marshall et al., 2007)</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p>Marshall, J., Cronin, T. W., &amp; Kleinlogel, S. (2007). Stomatopod eye structure and function: a review. <em>Arthropod Struct Dev</em>, <em>36</em>(4), 420-448. <a href="https://doi.org/10.1016/j.asd.2007.01.006">https://doi.org/10.1016/j.asd.2007.01.006</a></p>
+<p>Matsushita, A., Stewart, F., Ilić, M., Chen, P.-J., Wakita, D., Miyazaki, N., Murata, K., Kinoshita, M., Belušič, G., &amp; Arikawa, K. (2022). Connectome of the lamina reveals the circuit for early color processing in the visual pathway of a butterfly. <em>Current Biology</em>, <em>32</em>(10), 2291-2299.e2293. <a href="https://doi.org/10.1016/j.cub.2022.03.066">https://doi.org/10.1016/j.cub.2022.03.066</a> (Current Biology)</p>
+]]></content>
+      <categories>
+        <category>neuroscience</category>
+      </categories>
+      <tags>
+        <tag>mantis shrimp</tag>
+        <tag>vision</tag>
+        <tag>neuroscience</tag>
+        <tag>note</tag>
+      </tags>
+  </entry>
 </search>
