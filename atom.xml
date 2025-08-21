@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2024-02-16T05:09:18.874Z</updated>
+  <updated>2025-08-21T04:47:24.000Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,301 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Pyrosetta Resources</title>
+    <link href="http://example.com/2025/08/21/Note%20_%20Pyrosetta%20Resources/"/>
+    <id>http://example.com/2025/08/21/Note%20_%20Pyrosetta%20Resources/</id>
+    <published>2025-08-21T04:47:22.000Z</published>
+    <updated>2025-08-21T04:47:24.000Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;Pyrosetta-Resources&quot;&gt;&lt;a href=&quot;#Pyrosetta-Resources&quot; class=&quot;headerlink&quot; title=&quot;Pyrosetta Resources&quot;&gt;&lt;/a&gt;Pyrosetta Resources&lt;/h1&gt;&lt;h2</summary>
+        
+      
+    
+    
+    
+    <category term="protein design" scheme="http://example.com/categories/protein-design/"/>
+    
+    
+    <category term="PyRosetta" scheme="http://example.com/tags/PyRosetta/"/>
+    
+    <category term="biochemistry" scheme="http://example.com/tags/biochemistry/"/>
+    
+    <category term="protein" scheme="http://example.com/tags/protein/"/>
+    
+    <category term="protein design" scheme="http://example.com/tags/protein-design/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>PyRosetta Basics (3): Viewer</title>
+    <link href="http://example.com/2025/08/21/Note%20_%20PyRosetta%20Basics%20(3)_%20Viewer/"/>
+    <id>http://example.com/2025/08/21/Note%20_%20PyRosetta%20Basics%20(3)_%20Viewer/</id>
+    <published>2025-08-21T04:43:37.000Z</published>
+    <updated>2025-08-21T04:43:40.000Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;PyRosetta-Basics-3-Viewer&quot;&gt;&lt;a href=&quot;#PyRosetta-Basics-3-Viewer&quot; class=&quot;headerlink&quot; title=&quot;PyRosetta Basics (3):</summary>
+        
+      
+    
+    
+    
+    <category term="protein design" scheme="http://example.com/categories/protein-design/"/>
+    
+    
+    <category term="note" scheme="http://example.com/tags/note/"/>
+    
+    <category term="PyRosetta" scheme="http://example.com/tags/PyRosetta/"/>
+    
+    <category term="biochemistry" scheme="http://example.com/tags/biochemistry/"/>
+    
+    <category term="protein" scheme="http://example.com/tags/protein/"/>
+    
+    <category term="protein design" scheme="http://example.com/tags/protein-design/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>PyRosetta Basics (1): Pose</title>
+    <link href="http://example.com/2025/08/21/Note%20_%20PyRosetta%20Basics%20(1)_%20Pose/"/>
+    <id>http://example.com/2025/08/21/Note%20_%20PyRosetta%20Basics%20(1)_%20Pose/</id>
+    <published>2025-08-21T04:42:40.000Z</published>
+    <updated>2025-08-21T04:42:42.000Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;PyRosetta-Basics-1-Pose&quot;&gt;&lt;a href=&quot;#PyRosetta-Basics-1-Pose&quot; class=&quot;headerlink&quot; title=&quot;PyRosetta Basics (1): Pose&quot;&gt;&lt;/a&gt;PyRosetta</summary>
+        
+      
+    
+    
+    
+    <category term="protein design" scheme="http://example.com/categories/protein-design/"/>
+    
+    
+    <category term="note" scheme="http://example.com/tags/note/"/>
+    
+    <category term="PyRosetta" scheme="http://example.com/tags/PyRosetta/"/>
+    
+    <category term="biochemistry" scheme="http://example.com/tags/biochemistry/"/>
+    
+    <category term="protein" scheme="http://example.com/tags/protein/"/>
+    
+    <category term="protein design" scheme="http://example.com/tags/protein-design/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>PyRosetta Basics (2): PyMOL Mover</title>
+    <link href="http://example.com/2025/08/21/Note%20_%20PyRosetta%20Basics%20(2)_%20PyMOL%20Mover/"/>
+    <id>http://example.com/2025/08/21/Note%20_%20PyRosetta%20Basics%20(2)_%20PyMOL%20Mover/</id>
+    <published>2025-08-21T04:41:34.000Z</published>
+    <updated>2025-08-21T04:41:37.000Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;PyMOL-Mover&quot;&gt;&lt;a href=&quot;#PyMOL-Mover&quot; class=&quot;headerlink&quot; title=&quot;PyMOL Mover&quot;&gt;&lt;/a&gt;PyMOL Mover&lt;/h1&gt;&lt;figure class=&quot;highlight</summary>
+        
+      
+    
+    
+    
+    <category term="protein design" scheme="http://example.com/categories/protein-design/"/>
+    
+    
+    <category term="note" scheme="http://example.com/tags/note/"/>
+    
+    <category term="PyRosetta" scheme="http://example.com/tags/PyRosetta/"/>
+    
+    <category term="biochemistry" scheme="http://example.com/tags/biochemistry/"/>
+    
+    <category term="protein" scheme="http://example.com/tags/protein/"/>
+    
+    <category term="protein design" scheme="http://example.com/tags/protein-design/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>PyRosetta Default Initiation</title>
+    <link href="http://example.com/2025/08/21/Note%20_%20PyRosetta%20Basic%20Initiation/"/>
+    <id>http://example.com/2025/08/21/Note%20_%20PyRosetta%20Basic%20Initiation/</id>
+    <published>2025-08-21T04:41:03.000Z</published>
+    <updated>2025-08-21T04:41:06.000Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;PyRosetta-Default-Initiation&quot;&gt;&lt;a href=&quot;#PyRosetta-Default-Initiation&quot; class=&quot;headerlink&quot; title=&quot;PyRosetta Default</summary>
+        
+      
+    
+    
+    
+    <category term="protein design" scheme="http://example.com/categories/protein-design/"/>
+    
+    
+    <category term="note" scheme="http://example.com/tags/note/"/>
+    
+    <category term="PyRosetta" scheme="http://example.com/tags/PyRosetta/"/>
+    
+    <category term="biochemistry" scheme="http://example.com/tags/biochemistry/"/>
+    
+    <category term="protein" scheme="http://example.com/tags/protein/"/>
+    
+    <category term="protein design" scheme="http://example.com/tags/protein-design/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>PyRosetta Basics (8): Relax Protocols</title>
+    <link href="http://example.com/2025/08/21/Note%20_%20PyRosetta%20Basics%20(8)_%20Relax%20Protocols/"/>
+    <id>http://example.com/2025/08/21/Note%20_%20PyRosetta%20Basics%20(8)_%20Relax%20Protocols/</id>
+    <published>2025-08-21T04:39:12.000Z</published>
+    <updated>2025-08-21T04:39:17.000Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;PyRosetta-Basics-8-Relax-Protocols&quot;&gt;&lt;a href=&quot;#PyRosetta-Basics-8-Relax-Protocols&quot; class=&quot;headerlink&quot; title=&quot;PyRosetta Basics (8):</summary>
+        
+      
+    
+    
+    
+    <category term="protein design" scheme="http://example.com/categories/protein-design/"/>
+    
+    
+    <category term="note" scheme="http://example.com/tags/note/"/>
+    
+    <category term="PyRosetta" scheme="http://example.com/tags/PyRosetta/"/>
+    
+    <category term="biochemistry" scheme="http://example.com/tags/biochemistry/"/>
+    
+    <category term="protein" scheme="http://example.com/tags/protein/"/>
+    
+    <category term="protein design" scheme="http://example.com/tags/protein-design/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>PyRosetta Basics (7): Movers for Side Chain Packing and Design</title>
+    <link href="http://example.com/2025/08/21/Note%20_%20PyRosetta%20Basics%20(7)_%20Movers%20for%20Side%20Chain%20Packing%20and%20Design/"/>
+    <id>http://example.com/2025/08/21/Note%20_%20PyRosetta%20Basics%20(7)_%20Movers%20for%20Side%20Chain%20Packing%20and%20Design/</id>
+    <published>2025-08-21T04:38:22.261Z</published>
+    <updated>2025-08-21T04:46:52.945Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;PyRosetta-Basics-7-Movers-for-Side-Chain-Packing-and-Design&quot;&gt;&lt;a href=&quot;#PyRosetta-Basics-7-Movers-for-Side-Chain-Packing-and-Design&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="protein design" scheme="http://example.com/categories/protein-design/"/>
+    
+    
+    <category term="note" scheme="http://example.com/tags/note/"/>
+    
+    <category term="PyRosetta" scheme="http://example.com/tags/PyRosetta/"/>
+    
+    <category term="biochemistry" scheme="http://example.com/tags/biochemistry/"/>
+    
+    <category term="protein" scheme="http://example.com/tags/protein/"/>
+    
+    <category term="protein design" scheme="http://example.com/tags/protein-design/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>PyRosetta Basics (6): Movers for Backbone Folding</title>
+    <link href="http://example.com/2025/08/21/Note%20_%20PyRosetta%20Basics%20(6)_%20Movers%20for%20Backbone%20Folding/"/>
+    <id>http://example.com/2025/08/21/Note%20_%20PyRosetta%20Basics%20(6)_%20Movers%20for%20Backbone%20Folding/</id>
+    <published>2025-08-21T04:38:22.259Z</published>
+    <updated>2025-08-21T04:45:54.022Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;PyRosetta-Basics-6-Movers-for-Backbone-Folding&quot;&gt;&lt;a href=&quot;#PyRosetta-Basics-6-Movers-for-Backbone-Folding&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="protein design" scheme="http://example.com/categories/protein-design/"/>
+    
+    
+    <category term="note" scheme="http://example.com/tags/note/"/>
+    
+    <category term="PyRosetta" scheme="http://example.com/tags/PyRosetta/"/>
+    
+    <category term="biochemistry" scheme="http://example.com/tags/biochemistry/"/>
+    
+    <category term="protein" scheme="http://example.com/tags/protein/"/>
+    
+    <category term="protein design" scheme="http://example.com/tags/protein-design/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>PyRosetta Basics (4): Rosetta Scripts Parser</title>
+    <link href="http://example.com/2025/08/21/Note%20_%20PyRosetta%20Basics%20(4)_%20Rosetta%20Scripts%20Parser/"/>
+    <id>http://example.com/2025/08/21/Note%20_%20PyRosetta%20Basics%20(4)_%20Rosetta%20Scripts%20Parser/</id>
+    <published>2025-08-21T04:38:22.253Z</published>
+    <updated>2025-08-21T04:45:34.084Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;PyRosetta-Basics-4-Rosetta-Scripts-Parser&quot;&gt;&lt;a href=&quot;#PyRosetta-Basics-4-Rosetta-Scripts-Parser&quot; class=&quot;headerlink&quot; title=&quot;PyRosetta</summary>
+        
+      
+    
+    
+    
+    <category term="protein design" scheme="http://example.com/categories/protein-design/"/>
+    
+    
+    <category term="note" scheme="http://example.com/tags/note/"/>
+    
+    <category term="PyRosetta" scheme="http://example.com/tags/PyRosetta/"/>
+    
+    <category term="biochemistry" scheme="http://example.com/tags/biochemistry/"/>
+    
+    <category term="protein" scheme="http://example.com/tags/protein/"/>
+    
+    <category term="protein design" scheme="http://example.com/tags/protein-design/"/>
+    
+  </entry>
   
   <entry>
     <title>Notes on Stomatopod&#39;s visual ability 3</title>
@@ -83,7 +378,7 @@
     <link href="http://example.com/2024/01/28/Notes-on-Stomatopod-s-visual-ability-1/"/>
     <id>http://example.com/2024/01/28/Notes-on-Stomatopod-s-visual-ability-1/</id>
     <published>2024-01-28T09:57:02.000Z</published>
-    <updated>2024-01-29T00:50:11.611Z</updated>
+    <updated>2024-02-16T05:30:44.640Z</updated>
     
     
       

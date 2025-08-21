@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-Hans">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>PyRosetta Basics (8): Relax Protocols |  辰</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/favicon.ico" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    <link rel="alternate" href="/atom.xml" title="辰" type="application/atom+xml">
+</head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-Note _ PyRosetta Basics (8)_ Relax Protocols"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  PyRosetta Basics (8): Relax Protocols
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2025/08/21/Note%20_%20PyRosetta%20Basics%20(8)_%20Relax%20Protocols/" class="article-date">
+  <time datetime="2025-08-21T04:39:12.000Z" itemprop="datePublished">2025-08-21</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/protein-design/">protein design</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> Word count:</span>
+            <span class="post-count">1.1k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> Reading time≈</span>
+            <span class="post-count">6 min</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="PyRosetta-Basics-8-Relax-Protocols"><a href="#PyRosetta-Basics-8-Relax-Protocols" class="headerlink" title="PyRosetta Basics (8): Relax Protocols"></a>PyRosetta Basics (8): Relax Protocols</h1><h2 id="Initialization-Same-as-the-“Packing”-chapter"><a href="#Initialization-Same-as-the-“Packing”-chapter" class="headerlink" title="Initialization(Same as the “Packing” chapter)"></a>Initialization(Same as the “Packing” chapter)</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#Python</span></span><br><span class="line"><span class="keyword">from</span> pyrosetta <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> pyrosetta.rosetta <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> pyrosetta.teaching <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="comment">#Core Includes</span></span><br><span class="line"><span class="keyword">from</span> pyrosetta.rosetta.core.kinematics <span class="keyword">import</span> MoveMap</span><br><span class="line"><span class="keyword">from</span> pyrosetta.rosetta.core.kinematics <span class="keyword">import</span> FoldTree</span><br><span class="line"><span class="keyword">from</span> pyrosetta.rosetta.core.pack.task <span class="keyword">import</span> TaskFactory</span><br><span class="line"><span class="keyword">from</span> pyrosetta.rosetta.core.pack.task <span class="keyword">import</span> operation</span><br><span class="line"><span class="keyword">from</span> pyrosetta.rosetta.core.simple_metrics <span class="keyword">import</span> metrics</span><br><span class="line"><span class="keyword">from</span> pyrosetta.rosetta.core.select <span class="keyword">import</span> residue_selector <span class="keyword">as</span> selections</span><br><span class="line"><span class="keyword">from</span> pyrosetta.rosetta.core <span class="keyword">import</span> select</span><br><span class="line"><span class="keyword">from</span> pyrosetta.rosetta.core.select.movemap <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="comment">#Protocol Includes</span></span><br><span class="line"><span class="keyword">from</span> pyrosetta.rosetta.protocols <span class="keyword">import</span> minimization_packing <span class="keyword">as</span> pack_min</span><br><span class="line"><span class="keyword">from</span> pyrosetta.rosetta.protocols <span class="keyword">import</span> relax <span class="keyword">as</span> rel</span><br><span class="line"><span class="keyword">from</span> pyrosetta.rosetta.protocols.antibody.residue_selector <span class="keyword">import</span> CDRResidueSelector</span><br><span class="line"><span class="keyword">from</span> pyrosetta.rosetta.protocols.antibody <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> pyrosetta.rosetta.protocols.loops <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> pyrosetta.rosetta.protocols.relax <span class="keyword">import</span> FastRelax</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">init(<span class="string">&#x27;-use_input_sc -input_ab_scheme AHo_Scheme -ignore_unrecognized_res \</span></span><br><span class="line"><span class="string">     -ignore_zero_occupancy false -load_PDB_components false -relax:default_repeats 2 -no_fconfig&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Introduction-to-Relax"><a href="#Introduction-to-Relax" class="headerlink" title="Introduction to Relax"></a>Introduction to Relax</h2><h3 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h3><blockquote>
+<p>Relax is the main protocol for simple all-atom refinement of structures in the Rosetta force-field. Relax does not do extensive refinement and only searches the local conformational space around the starting structure. Relax is thus often used in conjunction with more aggressive sampling protocols like fragment assembly (abinitio) and loop modelling. To evaluate different conformations based on their Rosetta all-atom score one usually has to apply relax.</p>
+<p>It can also read centroid models, in which case it will convert the model into a fullatom model and pack the sidechains. Relax does not carry out any extensive refinement and only searches the local conformational space neighbourhood.</p>
+<p>It is further advisable to apply relax only to previously idealized structures. Idealization avoids that score differences arise due to non-ideal geometry (e.g., at the position of former chain-breaks introduced during an aggressive sampling stage and removed by loop closing).</p>
+<p><a target="_blank" rel="noopener" href="https://docs.rosettacommons.org/docs/latest/application_documentation/structure_prediction/relax">https://docs.rosettacommons.org/docs/latest/application_documentation&#x2F;structure_prediction&#x2F;relax</a></p>
+</blockquote>
+<h3 id="ClassicRelax"><a href="#ClassicRelax" class="headerlink" title="ClassicRelax"></a><code>ClassicRelax</code></h3><p>Depreciated. Small move + shear move.</p>
+<h3 id="FastRelax-default"><a href="#FastRelax-default" class="headerlink" title="FastRelax(default)"></a><code>FastRelax</code>(default)</h3><p>5 cycles of {[packing + minimization] * n_ramping}.</p>
+<blockquote>
+<p>Packing: optimizing side chain conformations without editing side chains.</p>
+<p>Minimization: find local energy minima.</p>
+<p>n_ramping: steps of ramping up <code>fa_rep</code> (in one single cycle).</p>
+</blockquote>
+<p>In each of the 5 cycles, the repulsion energy (<code>fa_rep</code>) are firstly set to a small number, and then gradually increase to a realistic number in n-step ramping.</p>
+<p>Pseudo code:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Assume that we have a `Pose` object called `my_pose`</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>,<span class="number">5</span>): <span class="comment"># &quot;5&quot; by default, can be modified</span></span><br><span class="line">    fa_rep = <span class="number">0.1</span> * fa_rep</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, n_ramp):</span><br><span class="line">        fa_rep = Increase(fa_rep)</span><br><span class="line">        Packing(my_pose)</span><br><span class="line">        Minimizing(my_pose)</span><br></pre></td></tr></table></figure>
+
+<h3 id="CentroidRelax-for-massive-screening"><a href="#CentroidRelax-for-massive-screening" class="headerlink" title="CentroidRelax(for massive screening)"></a><code>CentroidRelax</code>(for massive screening)</h3><ol>
+<li>It uses centroid score functions</li>
+<li>It ramps up various energy terms while minimizing the pose</li>
+<li>It is rough but fast, thus is suitable for high-throughput structure design<br>(as a pre-processing &amp; evaluation for further <code>FastRelax</code>).</li>
+</ol>
+<h2 id="FastRelax-class"><a href="#FastRelax-class" class="headerlink" title="FastRelax class"></a><code>FastRelax</code> class</h2><h3 id="Instantiation-Configurations"><a href="#Instantiation-Configurations" class="headerlink" title="Instantiation &amp; Configurations"></a>Instantiation &amp; Configurations</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">my_fr = FastRelax() <span class="comment"># Instantiation a `FastRelax` object named `my_fr`</span></span><br><span class="line"></span><br><span class="line">my_scorefxn = get_score_function() <span class="comment"># A default ref2015 full atom score function</span></span><br><span class="line"></span><br><span class="line">my_fr.set_scorefxn(my_scorefxn)</span><br><span class="line"></span><br><span class="line"><span class="comment">#FastRelax takes a very long time, </span></span><br><span class="line"><span class="comment">#but we can decrease the amount of minimization cycles we use:</span></span><br><span class="line"><span class="comment">#(Only recommended for cartesian)</span></span><br><span class="line"><span class="comment"># fr.max_iter(100)</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Apply-FastRelaxto-a-Poseobject"><a href="#Apply-FastRelaxto-a-Poseobject" class="headerlink" title="Apply FastRelaxto a Poseobject"></a>Apply <code>FastRelax</code>to a <code>Pose</code>object</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Assume that we have a `Pose` object named `my_pose`</span></span><br><span class="line">my_fr.apply(my_pose)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Regional-Relax-MoveMapFactoryclass"><a href="#Regional-Relax-MoveMapFactoryclass" class="headerlink" title="Regional Relax: MoveMapFactoryclass"></a>Regional Relax: <code>MoveMapFactory</code>class</h2><h3 id="Introduction-to-MoveMapFactory-class"><a href="#Introduction-to-MoveMapFactory-class" class="headerlink" title="Introduction to MoveMapFactory class"></a>Introduction to <code>MoveMapFactory</code> class</h3><p><code>MoveMapFactory</code>is the prototype of <code>MoveMap</code>.</p>
+<p><code>MoveMap</code> instructs a mover. </p>
+<p>The default is to have everything OFF first, and turn specific things on.</p>
+<p>Regional Relax requires:</p>
+<ol>
+<li>pre-defined residue selectors</li>
+<li>the pose</li>
+</ol>
+<p>So residue selectors are designed to be passed to the <code>MoveMapFactory</code>.</p>
+<p><a target="_blank" rel="noopener" href="https://www.yuque.com/yuqueyonghu2r84jv/zmy8pd/gfkfxof6pygtuwkr">Note | PyRosetta Basics (6): Movers for Backbone Folding</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.rosettacommons.org/docs/latest/scripting_documentation/RosettaScripts/MoveMapFactories/MoveMapFactories-RosettaScripts">MoveMapFactories (RosettaScripts)</a></p>
+<h3 id="Instantiation-configuration"><a href="#Instantiation-configuration" class="headerlink" title="Instantiation &amp; configuration"></a>Instantiation &amp; configuration</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Establish Residue Selector</span></span><br><span class="line">cdr_selector = CDRResidueSelector()</span><br><span class="line">cdr_selector.set_cdr(h1)</span><br><span class="line"><span class="comment"># h1 is a Enum imported when we imported the antibody namespace</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Instantiate a `MoveMapFactory` object named &quot;my_mmf&quot;</span></span><br><span class="line">my_mmf = MoveMapFactory()</span><br><span class="line"><span class="comment"># Setup `my_mmf`</span></span><br><span class="line">my_mmf.add_bb_action(mm_enable, cdr_selector)</span><br><span class="line">my_mmf.add_chi_action(mm_enable, cdr_selector) </span><br><span class="line"><span class="comment"># mm_enable and mm_disable are Enums (numbered variables) that </span></span><br><span class="line"><span class="comment">#  come when we import the MMF.</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Check-the-MoveMapFactory-settings"><a href="#Check-the-MoveMapFactory-settings" class="headerlink" title="Check the MoveMapFactory settings"></a>Check the <code>MoveMapFactory</code> settings</h3><p>Based on the <code>MoveMapFactory</code>, we can create a <code>MoveMap</code>object from a <code>Pose</code>object, and thus we can check the settings.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Instantiate a `MoveMap` object from `my_mmf`</span></span><br><span class="line"><span class="comment"># We need to pass in a `Pose` object (`my_pose`)</span></span><br><span class="line">my_mm  = my_mmf.create_movemap_from_pose(my_pose)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Inspect my_mm</span></span><br><span class="line"><span class="built_in">print</span>(my_mm)</span><br></pre></td></tr></table></figure>
+
+<h3 id="Basic-Setup-of-Regional-FastRelax"><a href="#Basic-Setup-of-Regional-FastRelax" class="headerlink" title="Basic Setup of Regional FastRelax"></a>Basic Setup of Regional <code>FastRelax</code></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Assume that we have a `FastRelax` object called `my_fr`</span></span><br><span class="line"><span class="comment"># Assume that we have a `MoveMapFactory` object called `my_mmf`</span></span><br><span class="line">my_fr.set_movemap_factory(my_mmf)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Assume that we have a `TaskFactory` object called `pack_cdrs_and_neighbors_tf`</span></span><br><span class="line">my_fr.set_task_factory(pack_cdrs_and_neighbors_tf)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Assume that we have a default ref2015 full atom score function</span></span><br><span class="line">my_fr.set_scorefxn(my_scorefxn)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Assume that we have a `Pose` object called `my_pose`</span></span><br><span class="line"><span class="comment"># Finally, we can apply the `my_fr` to `my_pose`:</span></span><br><span class="line">my_fr.apply(my_pose)</span><br></pre></td></tr></table></figure>
+
+<h3 id="Optimization"><a href="#Optimization" class="headerlink" title="Optimization"></a>Optimization</h3><p>Basic Setup may cause large conformation shifts that we don’t want.</p>
+<p>We can tackle this problem by using a different score function, OR by customizing the <code>FoldTree</code>.</p>
+<p>(Not both)</p>
+<h4 id="Cartesian-space-refinement-ref2015-cart"><a href="#Cartesian-space-refinement-ref2015-cart" class="headerlink" title="Cartesian-space refinement ref2015_cart"></a>Cartesian-space refinement <code>ref2015_cart</code></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Create score function specified for Cartesian</span></span><br><span class="line">cart_sf = create_score_function(<span class="string">&quot;ref2015_cart&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Assume that we have a `MoveMapFactory` object called `my_mmf`</span></span><br><span class="line">my_mmf.set_cartesian(<span class="literal">True</span>) <span class="comment"># Turn &quot;Cartesian mode&quot; on.</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Assume that we have a `FastRelax` object called `my_fr`</span></span><br><span class="line">my_fr.set_movemap_factory(my_mmf)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Use `cart_sf` as the score function for FastRelax</span></span><br><span class="line">my_fr.set_scorefxn(cart_sf)</span><br><span class="line">my_fr.cartesian(<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#This is a general recommendation for cartesian minimization - it lowers the number of maximum cycles.</span></span><br><span class="line"><span class="comment"># More than this only increases time of protocol, but has little effect on energies/structure</span></span><br><span class="line">fr.max_iter(<span class="number">200</span>)</span><br></pre></td></tr></table></figure>
+
+<p>These settings are Cartesian-specifc. They are turned off by default. Turn them off under other circumstances.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">my_mmf.set_cartesian(<span class="literal">False</span>)</span><br><span class="line">my_fr.cartesian(<span class="literal">False</span>)</span><br><span class="line">my_fr.max_iter(<span class="number">0</span>) <span class="comment">#Reset to default </span></span><br></pre></td></tr></table></figure>
+
+<h4 id="Customizing-FoldTree-A-Classic-way"><a href="#Customizing-FoldTree-A-Classic-way" class="headerlink" title="Customizing FoldTree (A Classic way)"></a>Customizing <code>FoldTree</code> (A Classic way)</h4><p><font style="color:#DF2A3F;">WARNING</font>: If Cartesian has been turned on, we should turn Cartesian off before using this solution.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Assume that we have a `Pose` object named `my_pose`, and it is an antibody</span></span><br><span class="line">ab_info = AntibodyInfo(my_pose) <span class="comment"># Get antibody-specific information</span></span><br><span class="line">my_ft = FoldTree() <span class="comment"># Instantiate an empty FolTree</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Get CDR H1 loop parameters</span></span><br><span class="line"><span class="comment"># &gt;&gt;&gt; #</span></span><br><span class="line">start = ab_info.get_CDR_start(h1, my_pose)</span><br><span class="line">stop =  ab_info.get_CDR_end(h1, my_pose)</span><br><span class="line">cutpoint = <span class="built_in">int</span>((stop-start)/<span class="number">2</span>) + start</span><br><span class="line"><span class="comment"># &lt;&lt;&lt; #</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Define the loop</span></span><br><span class="line">cdr_loop = Loop(start, stop, cutpoint)</span><br><span class="line">cdr_loops = Loops()</span><br><span class="line">cdr_loops.add_loop(cdr_loop)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Setup of `my_ft`</span></span><br><span class="line">fold_tree_from_loops(my_pose, cdr_loops, my_ft) </span><br><span class="line"></span><br><span class="line">my_pose.fold_tree(my_ft)</span><br><span class="line">original_ft = my_pose.fold_tree() <span class="comment"># Backup the original fold tree</span></span><br><span class="line">add_cutpoint_variants(my_pose)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create a default full atom score function</span></span><br><span class="line">scorefxn = get_score_function()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Add chainbreak term to `scorefxn` so we don&#x27;t get wacky stuff.  </span></span><br><span class="line"><span class="comment"># This term helps keep the peptide closed during bb movement.</span></span><br><span class="line">scorefxn_ch = scorefxn <span class="comment"># Copy the default score function</span></span><br><span class="line">scorefxn_ch.set_weight(rosetta.core.scoring.chainbreak, <span class="number">100</span>) <span class="comment"># Add chainbreak term</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Assume that we have a `FastRelax` object called `my_fr`</span></span><br><span class="line">my_fr.set_scorefxn(scorefxn_ch)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Assume that we have a `MoveMap` object (with basic configurations) called `my_mmf`</span></span><br><span class="line">my_fr.set_movemap_factory(my_mmf)</span><br><span class="line"></span><br><span class="line">my_fr.max_iter(<span class="number">0</span>) <span class="comment">#Reset to default </span></span><br><span class="line"><span class="comment"># if it&#x27;s 0, then we don&#x27;t set it in the MinMover that FastRelax runs</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Start FastRelax</span></span><br><span class="line">my_fr.apply(my_pose)</span><br><span class="line"></span><br><span class="line"><span class="comment">#Reapply the original fold tree</span></span><br><span class="line">my_pose.fold_tree(original_ft)</span><br></pre></td></tr></table></figure>
+
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>Copyright： </strong>
+          
+          Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2025/08/21/Note%20_%20PyRosetta%20Basics%20(8)_%20Relax%20Protocols/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PyRosetta/" rel="tag">PyRosetta</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/biochemistry/" rel="tag">biochemistry</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/note/" rel="tag">note</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/protein/" rel="tag">protein</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/protein-design/" rel="tag">protein design</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2025/08/21/Note%20_%20PyRosetta%20Basic%20Initiation/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            PyRosetta Default Initiation
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2025/08/21/Note%20_%20PyRosetta%20Basics%20(7)_%20Movers%20for%20Side%20Chain%20Packing%20and%20Design/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">PyRosetta Basics (7): Movers for Side Chain Packing and Design</div>
+      </a>
+    
+  </nav>
+
+  
+   
+  
+   
+    <script src="https://cdn.staticfile.org/twikoo/1.4.18/twikoo.all.min.js"></script>
+    <div id="twikoo" class="twikoo"></div>
+    <script>
+        twikoo.init({
+            envId: ""
+        })
+    </script>
+ 
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2024-2025
+        <i class="ri-heart-fill heart_icon"></i> Michael Law
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>Visitors:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>Views:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/logo.svg" alt="辰"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/friends">友链</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Search">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>
