@@ -9,7 +9,7 @@ description: ''
 keywords:
 author: Michael Law
 language: zh-Hans
-timezone: Asia/Beijing
+timezone: Asia/Shanghai
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
@@ -40,7 +40,10 @@ external_link:
   exclude: ''
 filename_case: 0
 render_drafts: false
-post_asset_folder: false
+post_asset_folder: true
+marked:
+  prependRoot: true
+  postAsset: true
 relative_link: false
 future: true
 syntax_highlighter: highlight.js
@@ -104,3 +107,22 @@ deploy:
   type: git
   repo: git@github.com:MichaelLaw2003/MichaelLaw2003.github.io.git
   branch: master
+
+###
+
+# hexo-generator-searchdb
+search:
+  path: search.xml
+  field: post
+  format: html
+
+# RSS
+feed:
+  type: atom
+  path: atom.xml
+  limit: 20
+  hub:
+  content:
+  content_limit: 140
+  content_limit_delim: " "
+  order_by: -date
