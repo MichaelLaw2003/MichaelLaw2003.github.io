@@ -2,7 +2,7 @@
 <search>
   <entry>
     <title>Hello World</title>
-    <url>/2024/01/21/hello-world/</url>
+    <url>/project/2024/01/21/hello-world/</url>
     <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
 <h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
 
@@ -20,7 +20,7 @@
   </entry>
   <entry>
     <title> Notes on Stomatopod&#39;s visual ability: 1 </title>
-    <url>/2024/01/28/Stomatopod&#39;s%20vision/Notes-on-Stomatopod-s-visual-ability-1/</url>
+    <url>/project/2024/01/28/Stomatopod&#39;s%20vision/Notes-on-Stomatopod-s-visual-ability-1/</url>
     <content><![CDATA[<h1 id="Notes-on-Stomatopod’s-visual-ability-1"><a href="#Notes-on-Stomatopod’s-visual-ability-1" class="headerlink" title="Notes on Stomatopod’s visual ability: 1"></a>Notes on Stomatopod’s visual ability: 1</h1><h2 id="Research-subject"><a href="#Research-subject" class="headerlink" title="Research subject"></a>Research subject</h2><p>The research subject is the Stomatopod, which is commonly known as the mantis shrimp.</p>
 <p>The Stomatopods have the greatest diversity of color receptor types known for any animal, and have a diverse set of photoreceptors that visualize polarized light. The review will focus on the features of the Stomatopod’s ability to visualize color and polarized light .</p>
 <p>In this field, the term “Stomatopod” is usually restricted to Gonodactyloidea and Lysiosquilloidea species.</p>
@@ -51,7 +51,7 @@
   </entry>
   <entry>
     <title>Biochemistry terms in Rosetta</title>
-    <url>/2025/10/12/PyRosetta%20&amp;%20Rosetta/Biochemistry%20Terms/</url>
+    <url>/project/2025/10/12/PyRosetta%20&amp;%20Rosetta/Biochemistry%20Terms/</url>
     <content><![CDATA[<h2 id="Amino-Acids-table"><a href="#Amino-Acids-table" class="headerlink" title="Amino Acids table"></a>Amino Acids table</h2><p>![](Biochemistry Terms.assets&#x2F;1756448806829-c0b0ec2d-e68b-42b3-beae-8f01b8f3befa.png)</p>
 <p>![](Biochemistry Terms.assets&#x2F;1756457007528-dfa3cb12-1a67-4220-bae3-5618147d4bd9.png)</p>
 <p>*NOTICE: Selenocysteine is not a component of natural proteins.</p>
@@ -118,7 +118,7 @@
   </entry>
   <entry>
     <title>Notes on Stomatopod&#39;s visual ability: 2</title>
-    <url>/2024/02/03/Stomatopod&#39;s%20vision/Notes-on-Stomatopod-s-visual-ability-2/</url>
+    <url>/project/2024/02/03/Stomatopod&#39;s%20vision/Notes-on-Stomatopod-s-visual-ability-2/</url>
     <content><![CDATA[<h1 id="Notes-on-Stomatopod’s-visual-ability-2"><a href="#Notes-on-Stomatopod’s-visual-ability-2" class="headerlink" title="Notes on Stomatopod’s visual ability: 2"></a>Notes on Stomatopod’s visual ability: 2</h1><h2 id="Terms-and-abbreviations"><a href="#Terms-and-abbreviations" class="headerlink" title="Terms and abbreviations"></a>Terms and abbreviations</h2><table>
 <thead>
 <tr>
@@ -182,7 +182,7 @@
   </entry>
   <entry>
     <title>Notes on Stomatopod&#39;s visual ability 3</title>
-    <url>/2024/02/16/Stomatopod&#39;s%20vision/Notes-on-Stomatopod-s-visual-ability-3/</url>
+    <url>/project/2024/02/16/Stomatopod&#39;s%20vision/Notes-on-Stomatopod-s-visual-ability-3/</url>
     <content><![CDATA[<h1 id="Notes-on-Stomatopod’s-visual-ability-3"><a href="#Notes-on-Stomatopod’s-visual-ability-3" class="headerlink" title="Notes on Stomatopod’s visual ability: 3"></a>Notes on Stomatopod’s visual ability: 3</h1><h2 id="Summary-of-the-structure-of-Stomatopod’s-eye"><a href="#Summary-of-the-structure-of-Stomatopod’s-eye" class="headerlink" title="Summary of the structure of Stomatopod’s eye"></a>Summary of the structure of Stomatopod’s eye</h2><h3 id="1"><a href="#1" class="headerlink" title="1"></a>1</h3><p>The compound eye of a Stomatopod is a hemispherical structure connected to an eye stalk.</p>
 <p>The compound eye consists of many ommatidia.</p>
 <p>Each ommatidia is mainly consists of</p>
@@ -228,7 +228,7 @@
   </entry>
   <entry>
     <title>Customize Mover</title>
-    <url>/2025/10/12/PyRosetta%20&amp;%20Rosetta/Customize%20Mover/</url>
+    <url>/project/2025/10/12/PyRosetta%20&amp;%20Rosetta/Customize%20Mover/</url>
     <content><![CDATA[<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Create a SequenceMover to chain the protocols together.</span></span><br><span class="line"><span class="comment"># Note: For real applications, you might need a TaskOperation to</span></span><br><span class="line"><span class="comment"># constrain residues from HBNet during the relax step.</span></span><br><span class="line">protocol = rosetta.protocols.moves.SequenceMover()</span><br><span class="line">protocol.add_mover(hbnet_mover)</span><br><span class="line">protocol.add_mover(fast_relax_mover)</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>protein design</category>
@@ -242,7 +242,7 @@
   </entry>
   <entry>
     <title>FoldTree Terms</title>
-    <url>/2025/10/12/PyRosetta%20&amp;%20Rosetta/FoldTree%20Terms/</url>
+    <url>/project/2025/10/12/PyRosetta%20&amp;%20Rosetta/FoldTree%20Terms/</url>
     <content><![CDATA[<h1 id="FoldTree-Terms"><a href="#FoldTree-Terms" class="headerlink" title="FoldTree Terms"></a><code>FoldTree</code> Terms</h1><h2 id="Jump"><a href="#Jump" class="headerlink" title="Jump"></a>Jump</h2><p>In Rosetta, a Jump represents a rigid-body transformation between two parts of a molecular system, like two protein chains, a protein and a ligand, or two disconnected sections of the same chain. This concept is tied to the FoldTree, which describes the kinematic relationships between residues in a Pose. </p>
 <p>A Jump is a single degree of freedom in the kinematic tree. Instead of a series of single-bond torsions, a Jump consists of six degrees of freedom: three for rotation and three for translation. This allows for the movement of entire rigid bodies relative to one another. </p>
 <p>Common scenarios where<code>Jumps</code> are used include:</p>
@@ -264,7 +264,7 @@
   </entry>
   <entry>
     <title>PyRosetta (1) Pose</title>
-    <url>/2025/10/12/PyRosetta%20&amp;%20Rosetta/PyRosetta%20(1)%20Pose/</url>
+    <url>/project/2025/10/12/PyRosetta%20&amp;%20Rosetta/PyRosetta%20(1)%20Pose/</url>
     <content><![CDATA[<h1 id="PyRosetta-1-Pose"><a href="#PyRosetta-1-Pose" class="headerlink" title="PyRosetta (1): Pose"></a>PyRosetta (1): Pose</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pyrosetta <span class="keyword">import</span> *</span><br><span class="line">init()</span><br><span class="line"><span class="comment">#import pyrosetta</span></span><br><span class="line"><span class="comment">#pyrosetta.init()</span></span><br></pre></td></tr></table></figure>
 
 <h2 id="Poseclass"><a href="#Poseclass" class="headerlink" title="Poseclass"></a><code>Pose</code>class</h2><h3 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h3><ol>
@@ -394,7 +394,7 @@
   </entry>
   <entry>
     <title>PyRosetta (10) HBNet</title>
-    <url>/2025/10/12/PyRosetta%20&amp;%20Rosetta/PyRosetta%20(10)%20HBNet%20Mover/</url>
+    <url>/project/2025/10/12/PyRosetta%20&amp;%20Rosetta/PyRosetta%20(10)%20HBNet%20Mover/</url>
     <content><![CDATA[<h1 id="PyRosetta-10-HBNet"><a href="#PyRosetta-10-HBNet" class="headerlink" title="PyRosetta (10): HBNet"></a>PyRosetta (10): HBNet</h1><h2 id="Initiation"><a href="#Initiation" class="headerlink" title="Initiation"></a>Initiation</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pyrosetta.rosetta.protocols.rosetta_scripts.XmlObjects <span class="keyword">import</span> create_from_string</span><br></pre></td></tr></table></figure>
 
 <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><blockquote>
@@ -466,7 +466,7 @@
   </entry>
   <entry>
     <title>PyRosetta (11) Make Bundle Movers</title>
-    <url>/2025/10/12/PyRosetta%20&amp;%20Rosetta/PyRosetta%20(11)%20Make%20Bundle%20Movers/</url>
+    <url>/project/2025/10/12/PyRosetta%20&amp;%20Rosetta/PyRosetta%20(11)%20Make%20Bundle%20Movers/</url>
     <content><![CDATA[<h1 id="Make-Bundle-Movers"><a href="#Make-Bundle-Movers" class="headerlink" title="Make Bundle Movers"></a>Make Bundle Movers</h1><h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>MakeBundle generates a helical bundle using the Crick equations (which describe a helix of helices) or modified Crick equations (describing a laterally-squashed helix of helices).</p>
 <p>This mover is general enough to create arbitrary helices using arbitrary backbones. Since strands are a special case of a helix (in which the turn per residue is about 180 degrees), the mover can also generate beta-barrels or other strand bundles. </p>
 <p>The generated secondary structure elements are disconnected, so subsequent movers (e.g. <strong>GeneralizedKIC</strong>) must be invoked to connect them with loops.</p>
@@ -518,7 +518,7 @@
   </entry>
   <entry>
     <title>PyRosetta (12) VirtualRoot Mover</title>
-    <url>/2025/10/12/PyRosetta%20&amp;%20Rosetta/PyRosetta%20(12)%20Virtual-Root%20Mover/</url>
+    <url>/project/2025/10/12/PyRosetta%20&amp;%20Rosetta/PyRosetta%20(12)%20Virtual-Root%20Mover/</url>
     <content><![CDATA[<h1 id="PyRosetta-12-VirtualRoot-Mover"><a href="#PyRosetta-12-VirtualRoot-Mover" class="headerlink" title="PyRosetta (12): VirtualRoot Mover"></a>PyRosetta (12): VirtualRoot Mover</h1><h2 id="Introduction-to-VirtualRootMover"><a href="#Introduction-to-VirtualRootMover" class="headerlink" title="Introduction to VirtualRootMover"></a>Introduction to <code>VirtualRootMover</code></h2><p>In PyRosetta, adding a “virtual root” to a <code>Pose</code> when using coordinate constraints helps prevent large, unintended structural shifts by creating a stable reference point for the energy calculations. Its role is to anchor the entire molecule and prevent “lever-arm effects,” which can cause distortion during minimization. </p>
 <h3 id="What-is-a-“lever-arm-effect”"><a href="#What-is-a-“lever-arm-effect”" class="headerlink" title="What is a “lever-arm effect”?"></a><strong>What is a “lever-arm effect”?</strong></h3><p>Rosetta minimizes molecular energy by manipulating a protein’s internal coordinates—such as the torsion angles of its backbone and sidechains. When a torsion angle is changed, all the atoms “downstream” of that bond (i.e., further away from the root of the molecule’s <code>FoldTree</code>) will shift in space. </p>
 <p>Consider a simple, long rod. If you fix one end (the root) and push the other, it will just move. But if you fix a point somewhere in the middle, pushing one end will cause a large, exaggerated movement of the other end, like a lever. This is the lever-arm effect. </p>
@@ -548,7 +548,7 @@
   </entry>
   <entry>
     <title>PyRosetta (13) Constraint Generator</title>
-    <url>/2025/10/12/PyRosetta%20&amp;%20Rosetta/PyRosetta%20(13)%20Constraint%20Generator%20Movers/</url>
+    <url>/project/2025/10/12/PyRosetta%20&amp;%20Rosetta/PyRosetta%20(13)%20Constraint%20Generator%20Movers/</url>
     <content><![CDATA[<h1 id="PyRosetta-13-Constraint-Generator"><a href="#PyRosetta-13-Constraint-Generator" class="headerlink" title="PyRosetta (13): Constraint Generator"></a>PyRosetta (13): Constraint Generator</h1><h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><h3 id="Constraint-functions"><a href="#Constraint-functions" class="headerlink" title="Constraint functions"></a>Constraint functions</h3><h4 id="Harmonic-HARMONIC"><a href="#Harmonic-HARMONIC" class="headerlink" title="Harmonic: HARMONIC"></a>Harmonic: <code>HARMONIC</code></h4><p>A harmonic constraint uses a simple parabola (a squared function) to apply a penalty. </p>
 <p><img src="https://cdn.nlark.com/yuque/0/2025/gif/32767990/1756801826076-cb2bdec1-c6cc-4207-97cd-81cb505c5e28.gif">$ E&#x3D;(\frac{x−x_0}{\sigma})^2 $</p>
 <p> where $ \sigma $is a force constant, $ x $ is the measured value, and $ x_0 $ is the ideal value. </p>
@@ -634,7 +634,7 @@
   </entry>
   <entry>
     <title>PyRosetta (14) Keep Region Mover</title>
-    <url>/2025/10/12/PyRosetta%20&amp;%20Rosetta/PyRosetta%20(14)%20Keep%20Region%20Mover/</url>
+    <url>/project/2025/10/12/PyRosetta%20&amp;%20Rosetta/PyRosetta%20(14)%20Keep%20Region%20Mover/</url>
     <content><![CDATA[<h1 id="PyRosetta-14-Keep-Region-Mover"><a href="#PyRosetta-14-Keep-Region-Mover" class="headerlink" title="PyRosetta (14): Keep Region Mover"></a>PyRosetta (14): Keep Region Mover</h1><h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>Keep the residues in the selected range.</p>
 <h2 id="Initiation"><a href="#Initiation" class="headerlink" title="Initiation"></a>Initiation</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pyrosetta.rosetta.protocols.grafting.simple_movers <span class="keyword">import</span> KeepRegionMover</span><br></pre></td></tr></table></figure>
 
@@ -659,7 +659,7 @@
   </entry>
   <entry>
     <title>PyRosetta (15) Rigid Body Movers &amp; Docking</title>
-    <url>/2025/10/12/PyRosetta%20&amp;%20Rosetta/PyRosetta%20(15)%20Rigid%20Body%20Movers/</url>
+    <url>/project/2025/10/12/PyRosetta%20&amp;%20Rosetta/PyRosetta%20(15)%20Rigid%20Body%20Movers/</url>
     <content><![CDATA[<h1 id="PyRosetta-15-Rigid-Body-Movers-Docking"><a href="#PyRosetta-15-Rigid-Body-Movers-Docking" class="headerlink" title="PyRosetta (15): Rigid Body Movers &amp; Docking"></a>PyRosetta (15): Rigid Body Movers &amp; Docking</h1><h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>The fundamental docking move is a rigid-body transformation consisting of a translation and rotation. Any rigid body move also needs to know which part moves and which part is fixed. In Rosetta, this division is known as a Jump and the set of protein segments and jumps are stored in an object attached to a pose called a <code>FoldTree</code>.</p>
 <p>Rigid body movers are components of protein docking protocols.</p>
 <h2 id="Initiation"><a href="#Initiation" class="headerlink" title="Initiation"></a>Initiation</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pyrosetta</span><br><span class="line"><span class="keyword">from</span> pyrosetta <span class="keyword">import</span> rosetta</span><br><span class="line"><span class="keyword">import</span> pyrosetta.rosetta.protocols.rigid <span class="keyword">as</span> rigid</span><br><span class="line"><span class="keyword">import</span> pyrosetta.rosetta.protocols.docking <span class="keyword">as</span> docking</span><br><span class="line">pyrosetta.init()</span><br></pre></td></tr></table></figure>
@@ -698,7 +698,7 @@
   </entry>
   <entry>
     <title>PyRosetta (16) Job Distributor</title>
-    <url>/2025/10/12/PyRosetta%20&amp;%20Rosetta/PyRosetta%20(16)%20Job%20Distributor/</url>
+    <url>/project/2025/10/12/PyRosetta%20&amp;%20Rosetta/PyRosetta%20(16)%20Job%20Distributor/</url>
     <content><![CDATA[<h1 id="PyRosetta-16-Job-Distributor"><a href="#PyRosetta-16-Job-Distributor" class="headerlink" title="PyRosetta (16) Job Distributor"></a>PyRosetta (16) Job Distributor</h1><h2 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">## Instantiation of a `PyJobDistributor` object</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">output file name prefix: &quot;output&quot;</span></span><br><span class="line"><span class="string">Job numbers: 10</span></span><br><span class="line"><span class="string">Job evaluation: my_scorefxn</span></span><br><span class="line"><span class="string">Notice: a file called `output.fasc` will also be generated. It summarizes the energies and RMSDs of all structures created.</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line">jd = PyJobDistributor(<span class="string">&quot;output&quot;</span>, <span class="number">10</span>, my_scorefxn, compress=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">## Set native_pose</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">Assume that we have a `Pose` object called `my_starting_pose`</span></span><br><span class="line"><span class="string">`my_starting_pose` is the native crystal structure</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line">jd.native_pose = my_starting_pose</span><br><span class="line"></span><br><span class="line"><span class="comment">## We can manually run a job</span></span><br><span class="line">my_pose.assign(my_starting_pose)</span><br><span class="line">my_mover.apply(my_pose)</span><br><span class="line">jd.output_decoy(my_pose)</span><br><span class="line"></span><br><span class="line"><span class="comment">## Or, we can loop until all jobs are completed</span></span><br><span class="line"><span class="keyword">while</span> <span class="keyword">not</span> jd.job_complete:</span><br><span class="line">    my_pose.assign(my_starting_pose)</span><br><span class="line">    my_mover.apply(my_pose)</span><br><span class="line">    jd.output_decoy(my_pose)</span><br></pre></td></tr></table></figure>
 
 ]]></content>
@@ -714,7 +714,7 @@
   </entry>
   <entry>
     <title>PyRosetta (2) PyMOL Mover</title>
-    <url>/2025/10/12/PyRosetta%20&amp;%20Rosetta/PyRosetta%20(2)%20PyMOL%20Mover/</url>
+    <url>/project/2025/10/12/PyRosetta%20&amp;%20Rosetta/PyRosetta%20(2)%20PyMOL%20Mover/</url>
     <content><![CDATA[<h1 id="PyRosetta-2-PyMOL-Mover"><a href="#PyRosetta-2-PyMOL-Mover" class="headerlink" title="PyRosetta (2): PyMOL Mover"></a>PyRosetta (2): PyMOL Mover</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pyrosetta.rosetta.protocols.moves <span class="keyword">import</span> PyMOLMover</span><br><span class="line">init()</span><br><span class="line"><span class="comment">#import pyrosetta</span></span><br><span class="line"><span class="comment">#pyrosetta.init()</span></span><br></pre></td></tr></table></figure>
 
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">my_pose = pose_from_pdb(<span class="string">&quot;inputs/5tj3.pdb&quot;</span>)</span><br></pre></td></tr></table></figure>
@@ -780,7 +780,7 @@
   </entry>
   <entry>
     <title>PyRosetta (3) Viewer</title>
-    <url>/2025/10/12/PyRosetta%20&amp;%20Rosetta/PyRosetta%20(3)%20Viewer/</url>
+    <url>/project/2025/10/12/PyRosetta%20&amp;%20Rosetta/PyRosetta%20(3)%20Viewer/</url>
     <content><![CDATA[<h1 id="PyRosetta-3-Viewer"><a href="#PyRosetta-3-Viewer" class="headerlink" title="PyRosetta (3): Viewer"></a>PyRosetta (3): Viewer</h1><h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>The pyrosetta.distributed Viewer quickly renders <code>.pdb</code> files, dynamically instantiating Pose objects if required for certain visualization modules (<code>viewer.set*</code>). </p>
 <p>So when adding visualization modules to the Viewer or using presets, passing Pose or PackedPose objects to the Viewer is suggested for quicker rendering. </p>
 <p>If a Pose object or list, tuple, or set of Pose objects are provided to the Viewer, the Viewer will dynamically update upon Pose conformational changes by calling the view.show() method or equivalently view(). </p>
@@ -822,7 +822,7 @@
   </entry>
   <entry>
     <title>PyRosetta (4) Rosetta Scripts Parser</title>
-    <url>/2025/10/12/PyRosetta%20&amp;%20Rosetta/PyRosetta%20(4)%20Rosetta%20Scripts%20Parser/</url>
+    <url>/project/2025/10/12/PyRosetta%20&amp;%20Rosetta/PyRosetta%20(4)%20Rosetta%20Scripts%20Parser/</url>
     <content><![CDATA[<h1 id="PyRosetta-4-Rosetta-Scripts-Parser"><a href="#PyRosetta-4-Rosetta-Scripts-Parser" class="headerlink" title="PyRosetta (4): Rosetta Scripts Parser"></a>PyRosetta (4): Rosetta Scripts Parser</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">!pip install pyrosettacolabsetup</span><br><span class="line"><span class="keyword">import</span> pyrosettacolabsetup; pyrosettacolabsetup.install_pyrosetta()</span><br><span class="line"><span class="keyword">import</span> pyrosetta; pyrosetta.init()</span><br></pre></td></tr></table></figure>
 
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pyrosetta <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> rosetta.protocols.rosetta_scripts <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">init(<span class="string">&#x27;-no_fconfig @inputs/rabd/common&#x27;</span>)</span><br></pre></td></tr></table></figure>
@@ -856,7 +856,7 @@
   </entry>
   <entry>
     <title>PyRosetta (6) Movers for Backbone Folding</title>
-    <url>/2025/10/12/PyRosetta%20&amp;%20Rosetta/PyRosetta%20(6)%20Backbone%20Folding/</url>
+    <url>/project/2025/10/12/PyRosetta%20&amp;%20Rosetta/PyRosetta%20(6)%20Backbone%20Folding/</url>
     <content><![CDATA[<h1 id="PyRosetta-6-Movers-for-Backbone-Folding"><a href="#PyRosetta-6-Movers-for-Backbone-Folding" class="headerlink" title="PyRosetta (6): Movers for Backbone Folding"></a>PyRosetta (6): Movers for Backbone Folding</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">!pip install pyrosettacolabsetup</span><br><span class="line"><span class="keyword">import</span> pyrosettacolabsetup; pyrosettacolabsetup.install_pyrosetta()</span><br><span class="line"><span class="keyword">import</span> pyrosetta; pyrosetta.init()</span><br><span class="line"><span class="keyword">from</span> pyrosetta <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> pyrosetta.teaching <span class="keyword">import</span> *</span><br><span class="line">init()</span><br></pre></td></tr></table></figure>
 
 <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>One of the most basic operations in protein structure and design algorithms is manipulation of the protein conformation. </p>
@@ -961,7 +961,7 @@
   </entry>
   <entry>
     <title>PyRosetta (5) Score Function</title>
-    <url>/2025/10/12/PyRosetta%20&amp;%20Rosetta/PyRosetta%20(5)%20Score%20Function/</url>
+    <url>/project/2025/10/12/PyRosetta%20&amp;%20Rosetta/PyRosetta%20(5)%20Score%20Function/</url>
     <content><![CDATA[<h1 id="PyRosetta-5-Score-Function"><a href="#PyRosetta-5-Score-Function" class="headerlink" title="PyRosetta (5): Score Function"></a>PyRosetta (5): Score Function</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">!pip install pyrosettacolabsetup</span><br><span class="line"><span class="keyword">import</span> pyrosettacolabsetup; pyrosettacolabsetup.install_pyrosetta()</span><br><span class="line"><span class="keyword">import</span> pyrosetta; pyrosetta.init()</span><br><span class="line"><span class="keyword">import</span> pyrosetta</span><br><span class="line">pyrosetta.init()</span><br></pre></td></tr></table></figure>
 
 <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>Rosetta scores the energy of a <code>pose</code>object with a score function.</p>
@@ -1038,7 +1038,7 @@
   </entry>
   <entry>
     <title>PyRosetta (7) Side Chain Packing &amp; Designing</title>
-    <url>/2025/10/12/PyRosetta%20&amp;%20Rosetta/PyRosetta%20(7)%20Side%20Chain%20Packing%20&amp;%20Designing/</url>
+    <url>/project/2025/10/12/PyRosetta%20&amp;%20Rosetta/PyRosetta%20(7)%20Side%20Chain%20Packing%20&amp;%20Designing/</url>
     <content><![CDATA[<h1 id="PyRosetta-7-Side-Chain-Packing-Designing"><a href="#PyRosetta-7-Side-Chain-Packing-Designing" class="headerlink" title="PyRosetta (7): Side Chain Packing &amp; Designing"></a>PyRosetta (7): Side Chain Packing &amp; Designing</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Python</span></span><br><span class="line"><span class="keyword">from</span> pyrosetta <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> pyrosetta.rosetta <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> pyrosetta.teaching <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="comment"># Core Includes</span></span><br><span class="line"><span class="keyword">from</span> pyrosetta.rosetta.core.kinematics <span class="keyword">import</span> MoveMap</span><br><span class="line"><span class="keyword">from</span> pyrosetta.rosetta.core.kinematics <span class="keyword">import</span> FoldTree</span><br><span class="line"><span class="keyword">from</span> pyrosetta.rosetta.core.pack.task <span class="keyword">import</span> TaskFactory</span><br><span class="line"><span class="comment">## The operations of a TaskFactory: </span></span><br><span class="line"><span class="keyword">from</span> pyrosetta.rosetta.core.pack.task <span class="keyword">import</span> operation</span><br><span class="line"><span class="keyword">from</span> pyrosetta.rosetta.core.simple_metrics <span class="keyword">import</span> metrics</span><br><span class="line"><span class="keyword">from</span> pyrosetta.rosetta.core.select <span class="keyword">import</span> residue_selector <span class="keyword">as</span> selections</span><br><span class="line"><span class="keyword">from</span> pyrosetta.rosetta.core <span class="keyword">import</span> select</span><br><span class="line"><span class="keyword">from</span> pyrosetta.rosetta.core.select.movemap <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="comment"># Protocol Includes</span></span><br><span class="line"><span class="keyword">from</span> pyrosetta.rosetta.protocols <span class="keyword">import</span> minimization_packing <span class="keyword">as</span> pack_min</span><br><span class="line"><span class="keyword">from</span> pyrosetta.rosetta.protocols <span class="keyword">import</span> relax <span class="keyword">as</span> rel</span><br><span class="line"><span class="keyword">from</span> pyrosetta.rosetta.protocols.antibody.residue_selector <span class="keyword">import</span> CDRResidueSelector</span><br><span class="line"><span class="keyword">from</span> pyrosetta.rosetta.protocols.antibody <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> pyrosetta.rosetta.protocols.loops <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> pyrosetta.rosetta.protocols.relax <span class="keyword">import</span> FastRelax</span><br></pre></td></tr></table></figure>
 
 <p><a href="https://docs.rosettacommons.org/docs/latest/full-options-list">https://docs.rosettacommons.org/docs/latest/full-options-list</a></p>
@@ -1114,7 +1114,7 @@ Simulated anealing refer to the ramping of temperature `kT`in Python looping.
   </entry>
   <entry>
     <title>PyRosetta (8) Relax</title>
-    <url>/2025/10/12/PyRosetta%20&amp;%20Rosetta/PyRosetta%20(8)%20Relax/</url>
+    <url>/project/2025/10/12/PyRosetta%20&amp;%20Rosetta/PyRosetta%20(8)%20Relax/</url>
     <content><![CDATA[<h1 id="PyRosetta-8-Relax"><a href="#PyRosetta-8-Relax" class="headerlink" title="PyRosetta (8): Relax"></a>PyRosetta (8): Relax</h1><h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><p>The word “relax” is borrowed from thermodynamics; it refers to the process in which a system gradually recovers to a balanced or equilibrium state from a unbalanced state.</p>
 <p>The input pose is considered as a “unbalanced” system, and through the “relax” process, PyRosetta aims to find a “balanced” (globally minimum) system.</p>
 <blockquote>
@@ -1151,7 +1151,7 @@ Simulated anealing refer to the ramping of temperature `kT`in Python looping.
   </entry>
   <entry>
     <title>PyRosetta (9) FastRelax</title>
-    <url>/2025/10/12/PyRosetta%20&amp;%20Rosetta/PyRosetta%20(9)%20FastRelax%20Mover/</url>
+    <url>/project/2025/10/12/PyRosetta%20&amp;%20Rosetta/PyRosetta%20(9)%20FastRelax%20Mover/</url>
     <content><![CDATA[<h1 id="PyRosetta-9-FastRelax"><a href="#PyRosetta-9-FastRelax" class="headerlink" title="PyRosetta (9): FastRelax"></a>PyRosetta (9): FastRelax</h1><h2 id="Initialization-Same-as-the-“Packing”-chapter"><a href="#Initialization-Same-as-the-“Packing”-chapter" class="headerlink" title="Initialization(Same as the “Packing” chapter)"></a>Initialization(Same as the “Packing” chapter)</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#Python</span></span><br><span class="line"><span class="keyword">from</span> pyrosetta <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> pyrosetta.rosetta <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> pyrosetta.teaching <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="comment">#Core Includes</span></span><br><span class="line"><span class="keyword">from</span> pyrosetta.rosetta.core.kinematics <span class="keyword">import</span> MoveMap</span><br><span class="line"><span class="keyword">from</span> pyrosetta.rosetta.core.kinematics <span class="keyword">import</span> FoldTree</span><br><span class="line"><span class="keyword">from</span> pyrosetta.rosetta.core.pack.task <span class="keyword">import</span> TaskFactory</span><br><span class="line"><span class="keyword">from</span> pyrosetta.rosetta.core.pack.task <span class="keyword">import</span> operation</span><br><span class="line"><span class="keyword">from</span> pyrosetta.rosetta.core.simple_metrics <span class="keyword">import</span> metrics</span><br><span class="line"><span class="keyword">from</span> pyrosetta.rosetta.core.select <span class="keyword">import</span> residue_selector <span class="keyword">as</span> selections</span><br><span class="line"><span class="keyword">from</span> pyrosetta.rosetta.core <span class="keyword">import</span> select</span><br><span class="line"><span class="keyword">from</span> pyrosetta.rosetta.core.select.movemap <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="comment">#Protocol Includes</span></span><br><span class="line"><span class="keyword">from</span> pyrosetta.rosetta.protocols <span class="keyword">import</span> minimization_packing <span class="keyword">as</span> pack_min</span><br><span class="line"><span class="keyword">from</span> pyrosetta.rosetta.protocols <span class="keyword">import</span> relax <span class="keyword">as</span> rel</span><br><span class="line"><span class="keyword">from</span> pyrosetta.rosetta.protocols.antibody.residue_selector <span class="keyword">import</span> CDRResidueSelector</span><br><span class="line"><span class="keyword">from</span> pyrosetta.rosetta.protocols.antibody <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> pyrosetta.rosetta.protocols.loops <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> pyrosetta.rosetta.protocols.relax <span class="keyword">import</span> FastRelax</span><br></pre></td></tr></table></figure>
 
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">init(<span class="string">&#x27;-use_input_sc -input_ab_scheme AHo_Scheme -ignore_unrecognized_res \</span></span><br><span class="line"><span class="string">     -ignore_zero_occupancy false -load_PDB_components false -relax:default_repeats 2 -no_fconfig&#x27;</span>)</span><br></pre></td></tr></table></figure>
@@ -1262,7 +1262,7 @@ Simulated anealing refer to the ramping of temperature `kT`in Python looping.
   </entry>
   <entry>
     <title>PyRosetta Initiation</title>
-    <url>/2025/10/12/PyRosetta%20&amp;%20Rosetta/PyRosetta%20Initiation/</url>
+    <url>/project/2025/10/12/PyRosetta%20&amp;%20Rosetta/PyRosetta%20Initiation/</url>
     <content><![CDATA[<h1 id="PyRosetta-Initiation"><a href="#PyRosetta-Initiation" class="headerlink" title="PyRosetta Initiation"></a>PyRosetta Initiation</h1><h2 id="Basic-Initiation"><a href="#Basic-Initiation" class="headerlink" title="Basic Initiation"></a>Basic Initiation</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pyrosetta <span class="keyword">import</span> *</span><br><span class="line">init </span><br><span class="line"><span class="comment"># pyrosetta.rosetta.init() # We can pass in Rosetta commandlines here</span></span><br><span class="line"><span class="comment">#import pyrosetta</span></span><br><span class="line"><span class="comment">#pyrosetta.init</span></span><br></pre></td></tr></table></figure>
 
 <h2 id="Multithreading"><a href="#Multithreading" class="headerlink" title="Multithreading"></a>Multithreading</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">init(extra_options=<span class="string">&quot;-multithreading:total_threads 8 -multithreading:interaction_graph_threads 4&quot;</span>) </span><br><span class="line"><span class="comment"># `8` and `4` is the numbers of threads as an example</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">init(-multithreading -total_threads &lt;int&gt;)</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
@@ -1298,7 +1298,7 @@ Simulated anealing refer to the ramping of temperature `kT`in Python looping.
   </entry>
   <entry>
     <title>PyRosetta Packer Task Operations</title>
-    <url>/2025/10/12/PyRosetta%20&amp;%20Rosetta/PyRosetta%20Packer%20Task%20Operations/</url>
+    <url>/project/2025/10/12/PyRosetta%20&amp;%20Rosetta/PyRosetta%20Packer%20Task%20Operations/</url>
     <content><![CDATA[<h1 id="PyRosetta-Packer-Task-Operations"><a href="#PyRosetta-Packer-Task-Operations" class="headerlink" title="PyRosetta Packer Task Operations"></a>PyRosetta Packer Task Operations</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pyrosetta.rosetta.core.pack.task.operation <span class="keyword">import</span> *</span><br></pre></td></tr></table></figure>
 
 <h2 id="Prevent-residues-from-repacking-designing"><a href="#Prevent-residues-from-repacking-designing" class="headerlink" title="Prevent residues from repacking&#x2F;designing"></a>Prevent residues from repacking&#x2F;designing</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># PreventRepackingRLT()</span></span><br><span class="line">my_task_factory.push_back(PreventRepackingRLT())</span><br></pre></td></tr></table></figure>
@@ -1325,7 +1325,7 @@ Simulated anealing refer to the ramping of temperature `kT`in Python looping.
   </entry>
   <entry>
     <title>Pyrosetta Selectors</title>
-    <url>/2025/10/12/PyRosetta%20&amp;%20Rosetta/PyRosetta%20Selectors/</url>
+    <url>/project/2025/10/12/PyRosetta%20&amp;%20Rosetta/PyRosetta%20Selectors/</url>
     <content><![CDATA[<h1 id="Pyrosetta-Selectors"><a href="#Pyrosetta-Selectors" class="headerlink" title="Pyrosetta Selectors"></a>Pyrosetta Selectors</h1><p><a href="https://docs.rosettacommons.org/docs/latest/scripting_documentation/RosettaScripts/ResidueSelectors/ResidueSelectors#residueselectors_logical-residueselectors_andresidueselector">ResidueSelectors</a></p>
 <p><a href="https://graylab.jhu.edu/PyRosetta.documentation/pyrosetta.rosetta.core.select.residue_selector.html">residue_selector — PyRosetta 4.0 documentation</a></p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># import all selectors via:</span></span><br><span class="line"><span class="keyword">from</span> pyrosetta.rosetta.core.select.residue_selector <span class="keyword">import</span> * </span><br><span class="line"><span class="comment"># For previewing selected residues</span></span><br><span class="line"><span class="keyword">from</span> pyrosetta.rosetta.core.select <span class="keyword">import</span> get_residues_from_subset </span><br></pre></td></tr></table></figure>
@@ -1363,7 +1363,7 @@ Simulated anealing refer to the ramping of temperature `kT`in Python looping.
   </entry>
   <entry>
     <title>Pyrosetta Resources</title>
-    <url>/2025/10/12/PyRosetta%20&amp;%20Rosetta/Pyrosetta%20Resources/</url>
+    <url>/project/2025/10/12/PyRosetta%20&amp;%20Rosetta/Pyrosetta%20Resources/</url>
     <content><![CDATA[<h1 id="Pyrosetta-Resources"><a href="#Pyrosetta-Resources" class="headerlink" title="Pyrosetta Resources"></a>Pyrosetta Resources</h1><h2 id="Guide"><a href="#Guide" class="headerlink" title="Guide"></a>Guide</h2><p><a href="https://docs.rosettacommons.org/docs/latest/getting_started/I-want-to-do-x#docking">https://docs.rosettacommons.org/docs/latest/getting_started&#x2F;I-want-to-do-x#docking</a></p>
 <h2 id="Energy-terms"><a href="#Energy-terms" class="headerlink" title="Energy terms"></a>Energy terms</h2><p><a href="https://docs.rosettacommons.org/docs/latest/rosetta_basics/scoring/score-types">https://docs.rosettacommons.org/docs/latest/rosetta_basics&#x2F;scoring&#x2F;score-types</a></p>
 <p><a href="https://docs.rosettacommons.org/docs/latest/rosetta_basics/scoring/centroid-score-terms">https://docs.rosettacommons.org/docs/latest/rosetta_basics&#x2F;scoring&#x2F;centroid-score-terms</a></p>
@@ -1391,7 +1391,7 @@ Simulated anealing refer to the ramping of temperature `kT`in Python looping.
   </entry>
   <entry>
     <title>Rosetta从PDB坐标生成蓝图BluePrint</title>
-    <url>/2025/10/12/PyRosetta%20&amp;%20Rosetta/Rosetta%20BluePrint/</url>
+    <url>/project/2025/10/12/PyRosetta%20&amp;%20Rosetta/Rosetta%20BluePrint/</url>
     <content><![CDATA[<h1 id="Rosetta从PDB坐标生成蓝图BluePrint"><a href="#Rosetta从PDB坐标生成蓝图BluePrint" class="headerlink" title="Rosetta从PDB坐标生成蓝图BluePrint"></a>Rosetta从PDB坐标生成蓝图BluePrint</h1><h2 id="它是用来做什么的？"><a href="#它是用来做什么的？" class="headerlink" title="它是用来做什么的？"></a>它是用来做什么的？</h2><p><a href="https://zhuanlan.zhihu.com/p/68849859">RosettaRemodel: 多才多艺的蛋白结构设计工具包 - 知乎</a></p>
 <h2 id="它在哪里？"><a href="#它在哪里？" class="headerlink" title="它在哪里？"></a>它在哪里？</h2><p><code>rosetta/main/tools/remodel/getBluePrintFromCoords.pl</code></p>
 <h2 id="如何使用它？（最小使用例）"><a href="#如何使用它？（最小使用例）" class="headerlink" title="如何使用它？（最小使用例）"></a>如何使用它？（最小使用例）</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#cd到getBluePrintFromCoords.pl所在目录</span></span><br><span class="line"><span class="comment">#假设有一个PDB文件位于当前目录，名称为my_file.pdb</span></span><br><span class="line"><span class="comment">#假设我们希望指定输出的蓝图文件名为blueprint.remodel</span></span><br><span class="line">perl getBluePrintFromCoords.pl -pdbfile ~/my_path/my_file.pdb &gt; blueprint.remodel</span><br></pre></td></tr></table></figure>
@@ -1409,7 +1409,7 @@ Simulated anealing refer to the ramping of temperature `kT`in Python looping.
   </entry>
   <entry>
     <title>Uncategorized PyRosetta Utils</title>
-    <url>/2025/10/12/PyRosetta%20&amp;%20Rosetta/Uncategorized%20PyRosetta%20Utils/</url>
+    <url>/project/2025/10/12/PyRosetta%20&amp;%20Rosetta/Uncategorized%20PyRosetta%20Utils/</url>
     <content><![CDATA[<h1 id="Uncategorized-PyRosetta-Utils"><a href="#Uncategorized-PyRosetta-Utils" class="headerlink" title="Uncategorized PyRosetta Utils"></a>Uncategorized PyRosetta Utils</h1><h2 id="Clean-ATOM"><a href="#Clean-ATOM" class="headerlink" title="Clean ATOM"></a>Clean ATOM</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pyrosetta <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> pyrosetta.teaching <span class="keyword">import</span> *</span><br><span class="line">cleanATOM(<span class="string">&#x27;./my_file.pdb&#x27;</span>)</span><br><span class="line"><span class="comment"># It will generate a file named &#x27;my_file.clean.pdb&#x27;</span></span><br></pre></td></tr></table></figure>
 
 <h2 id="Evaluate-how-much-is-a-pose-changed"><a href="#Evaluate-how-much-is-a-pose-changed" class="headerlink" title="Evaluate how much is a pose changed"></a>Evaluate how much is a pose changed</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">pyrosetta.rosetta.core.scoring.CA_rmsd(start_pose, end_pose)</span><br></pre></td></tr></table></figure>
