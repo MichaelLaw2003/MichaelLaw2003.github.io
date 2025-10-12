@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-Hans">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>PyRosetta (15) Rigid Body Movers &amp; Docking |  辰</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/favicon.ico" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    <link rel="alternate" href="/atom.xml" title="辰" type="application/atom+xml">
+</head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-PyRosetta &amp; Rosetta/PyRosetta (15) Rigid Body Movers"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  PyRosetta (15) Rigid Body Movers &amp; Docking
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2025/10/12/PyRosetta%20&%20Rosetta/PyRosetta%20(15)%20Rigid%20Body%20Movers/" class="article-date">
+  <time datetime="2025-10-12T12:05:54.531Z" itemprop="datePublished">2025-10-12</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/protein-design/">protein design</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> Word count:</span>
+            <span class="post-count">1.1k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> Reading time≈</span>
+            <span class="post-count">6 min</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="PyRosetta-15-Rigid-Body-Movers-Docking"><a href="#PyRosetta-15-Rigid-Body-Movers-Docking" class="headerlink" title="PyRosetta (15): Rigid Body Movers &amp; Docking"></a>PyRosetta (15): Rigid Body Movers &amp; Docking</h1><h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>The fundamental docking move is a rigid-body transformation consisting of a translation and rotation. Any rigid body move also needs to know which part moves and which part is fixed. In Rosetta, this division is known as a Jump and the set of protein segments and jumps are stored in an object attached to a pose called a <code>FoldTree</code>.</p>
+<p>Rigid body movers are components of protein docking protocols.</p>
+<h2 id="Initiation"><a href="#Initiation" class="headerlink" title="Initiation"></a>Initiation</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pyrosetta</span><br><span class="line"><span class="keyword">from</span> pyrosetta <span class="keyword">import</span> rosetta</span><br><span class="line"><span class="keyword">import</span> pyrosetta.rosetta.protocols.rigid <span class="keyword">as</span> rigid</span><br><span class="line"><span class="keyword">import</span> pyrosetta.rosetta.protocols.docking <span class="keyword">as</span> docking</span><br><span class="line">pyrosetta.init()</span><br></pre></td></tr></table></figure>
+
+<h2 id="Manual-rotation-and-translation"><a href="#Manual-rotation-and-translation" class="headerlink" title="Manual rotation and translation"></a>Manual rotation and translation</h2><h3 id="RigidBodySpinMover-class"><a href="#RigidBodySpinMover-class" class="headerlink" title="RigidBodySpinMover class"></a><code>RigidBodySpinMover</code> class</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># load pose</span></span><br><span class="line">pose = pyrosetta.pose_from_pdb(<span class="string">&quot;input.pdb&quot;</span>)</span><br><span class="line"> </span><br><span class="line"><span class="comment"># instantiating RigidBodyTransMover</span></span><br><span class="line">trans_mover = rigid.RigidBodyTransMover(pose, <span class="number">1</span>)</span><br><span class="line"> </span><br><span class="line"><span class="comment"># set Z-axis as the translation (sliding); Set sliding distance to 5 Å</span></span><br><span class="line">trans_axis = rosetta.numeric.xyzVector_double_t(<span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>)</span><br><span class="line">trans_mover.trans_axis(trans_axis)</span><br><span class="line">trans_mover.step_size(<span class="number">5.0</span>)</span><br><span class="line"> </span><br><span class="line"><span class="comment"># apply RigidBodyTransMover</span></span><br><span class="line">trans_mover.apply(pose)</span><br><span class="line"> </span><br><span class="line"><span class="comment"># save pose as pdb</span></span><br><span class="line">pose.dump_pdb(<span class="string">&quot;translated_output.pdb&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="RigidBodyTransMover-class"><a href="#RigidBodyTransMover-class" class="headerlink" title="RigidBodyTransMover class"></a><code>RigidBodyTransMover</code> class</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># load pose</span></span><br><span class="line">pose = pyrosetta.pose_from_pdb(<span class="string">&quot;input.pdb&quot;</span>)</span><br><span class="line"> </span><br><span class="line"><span class="comment"># Instantiating RigidBodySpinMover</span></span><br><span class="line">spin_mover = rigid.RigidBodySpinMover()</span><br><span class="line">rotation_axis = xyzVector_double_t(<span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">1.0</span>)</span><br><span class="line">rotation_angle = <span class="number">45.0</span>  <span class="comment"># degree</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Set spin axis</span></span><br><span class="line">spin_mover.spin_axis(rotation_axis)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Set rotation angle (in degree)</span></span><br><span class="line">spin_mover.spin_mag(rotation_angle)</span><br><span class="line"> </span><br><span class="line"><span class="comment"># Apply RigidBodySpinMover</span></span><br><span class="line">spin_mover.apply(pose)</span><br><span class="line"> </span><br><span class="line"><span class="comment"># save pose as pdb</span></span><br><span class="line">pose.dump_pdb(<span class="string">&quot;spinned_output.pdb&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="RigidBodyRandomizeMover"><a href="#RigidBodyRandomizeMover" class="headerlink" title="RigidBodyRandomizeMover"></a><code>RigidBodyRandomizeMover</code></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># sliding 1st jump</span></span><br><span class="line">jump_num = <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># `partner_upstream`: the first chain in pose</span></span><br><span class="line"><span class="comment"># `partner_downstream`: the second chain in pose</span></span><br><span class="line">randomize1 = rigid.RigidBodyRandomizeMover(my_pose, jump_num, rigid.partner_upstream)</span><br><span class="line">randomize2 = rigid.RigidBodyRandomizeMover(my_pose, jump_num, rigid.partner_downstream)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Slide-into-contact-DockingSlideIntoContactMover-FADockingSlideIntoContactMover"><a href="#Slide-into-contact-DockingSlideIntoContactMover-FADockingSlideIntoContactMover" class="headerlink" title="Slide into contact: DockingSlideIntoContactMover&#x2F; FADockingSlideIntoContactMover"></a>Slide into contact: <code>DockingSlideIntoContactMover</code>&#x2F; <code>FADockingSlideIntoContactMover</code></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># load pose</span></span><br><span class="line">pose = pyrosetta.pose_from_pdb(<span class="string">&quot;input.pdb&quot;</span>)</span><br><span class="line"> </span><br><span class="line"><span class="comment"># Instantiating DockingSlideIntoContactMover</span></span><br><span class="line">slide_mover = docking.DockingSlideIntoContactMover(<span class="number">1</span>)  <span class="comment"># sliding jump 1</span></span><br><span class="line"><span class="comment">#slide_mover = FaDockingSlideIntoContact(jump_num)  # for full-atom mode</span></span><br><span class="line">slide_mover.apply(pose)</span><br><span class="line"> </span><br><span class="line"><span class="comment"># Save pose</span></span><br><span class="line">pose.dump_pdb(<span class="string">&quot;slide_into_contact_output.pdb&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Low-Resolution-Global-Docking-Mover-DockingLowRes"><a href="#Low-Resolution-Global-Docking-Mover-DockingLowRes" class="headerlink" title="Low Resolution Global Docking Mover: DockingLowRes"></a>Low Resolution Global Docking Mover: <code>DockingLowRes</code></h2><blockquote>
+<p>The argument <code>&quot;A_B&quot;</code> tells Rosetta to make chain A the “rigid” chain and allow chain B to move. </p>
+<p>If there were more chains in the pdb structure, supplying <code>&quot;AB_C&quot;</code> would hold chains A and B rigid together as a single unit and allow chain C to move. </p>
+<p>The third argument <code>Vector1([1])</code> is required, it creates a Rosetta vector object — indexed from 1 — with one element that identifies the first Jump in the <code>FoldTree</code> for docking use.</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Assume that we have a `Pose` object named `cen_pose`</span></span><br><span class="line"><span class="comment"># 1st jump</span></span><br><span class="line">jump_num = <span class="number">1</span></span><br><span class="line">dock_lowres = DockingLowRes(scorefxn_low, jump_num)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Setup Fold Tree</span></span><br><span class="line">setup_foldtree(cen_pose,<span class="string">&quot;A_B&quot;</span>,Vector1([<span class="number">1</span>]))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Apply to cen_pose</span></span><br><span class="line">dock_lowres.apply(cen_pose)</span><br></pre></td></tr></table></figure>
+
+<h2 id="High-Resolution-Global-Docking-Mover-DockMCMProtocol"><a href="#High-Resolution-Global-Docking-Mover-DockMCMProtocol" class="headerlink" title="High Resolution Global Docking Mover: DockMCMProtocol"></a>High Resolution Global Docking Mover: <code>DockMCMProtocol</code></h2><p>The high-resolution stage of <code>RosettaDock</code> is also available as a <code>Mover</code>. This mover encompasses random rigid-body moves, side-chain packing, and gradient-based minimization in the rigid-body coordinates. High-resolution docking needs an all-atom score function. The optimized docking weights are available as a patch to the standard all-atom energy function.</p>
+<p>Unlike for <code>DockingLowRes</code>, we must supply the docking partners with <code>&quot;A_B&quot;</code> instead of <code>jump_num</code>.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Assume that we have a `Pose` object named `cen_pose`</span></span><br><span class="line">scorefxn_high = create_score_function(<span class="string">&quot;ref2015.wts&quot;</span>, <span class="string">&quot;docking&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Instantiating high resolution global docking mover</span></span><br><span class="line">dock_hi_res = DockMCMProtocol()</span><br><span class="line">dock_hi_res.set_scorefxn(scorefxn_high)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Setup Fold Tree</span></span><br><span class="line">setup_foldtree(cen_pose,<span class="string">&quot;A_B&quot;</span>,Vector1([<span class="number">1</span>]))</span><br><span class="line"></span><br><span class="line">dock_hi_res.set_partners(<span class="string">&quot;A_B&quot;</span>)  <span class="comment"># make sure the FoldTree is set up properly</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Apply</span></span><br><span class="line">dock_hi_res.apply(my_pose)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Copy the side chains from the original monomer structures</span></span><br><span class="line">recover_sidechains = ReturnSidechainMover(starting_pose)</span><br><span class="line">recover_sidechains.apply(my_pose)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Or, we can use a `PackRotamersMover`</span></span><br><span class="line"><span class="comment"># my_tf = TaskFactory()</span></span><br><span class="line"><span class="comment"># my_tf.push_back(operation.InitializeFromCommandline()) </span></span><br><span class="line"><span class="comment"># my_tf.push_back(operation.RestrictToRepacking()) </span></span><br><span class="line"><span class="comment"># my_packer = pyrosetta.rosetta.protocols.minimization_packing.PackRotamersMover() </span></span><br><span class="line"><span class="comment"># my_packer.task_factory(my_tf) </span></span><br><span class="line"><span class="comment"># my_packer.apply(my_pose)</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Docking-Using-XML"><a href="#Docking-Using-XML" class="headerlink" title="Docking Using XML"></a>Docking Using XML</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">xml = pyrosetta.rosetta.protocols.rosetta_scripts.XmlObjects.create_from_string(<span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">&lt;ROSETTASCRIPTS&gt;</span></span><br><span class="line"><span class="string">  &lt;SCOREFXNS&gt;</span></span><br><span class="line"><span class="string">    &lt;ScoreFunction name=&quot;fa_standard&quot; weights=&quot;ref2015.wts&quot;/&gt; `ref2015.wts` score function</span></span><br><span class="line"><span class="string">  &lt;/SCOREFXNS&gt;</span></span><br><span class="line"><span class="string">  &lt;RESIDUE_SELECTORS&gt;</span></span><br><span class="line"><span class="string">    &lt;Chain name=&quot;chX&quot; chains=&quot;X&quot;/&gt; select chain &quot;X&quot; in pose</span></span><br><span class="line"><span class="string">  &lt;/RESIDUE_SELECTORS&gt;</span></span><br><span class="line"><span class="string">  &lt;SIMPLE_METRICS&gt;</span></span><br><span class="line"><span class="string">    &lt;RMSDMetric name=&quot;rmsd_chX&quot; residue_selector=&quot;chX&quot; reference_name=&quot;store_native&quot; residue_selector_ref=&quot;chX&quot; robust=&quot;true&quot; rmsd_type=&quot;rmsd_all&quot; /&gt; </span></span><br><span class="line"><span class="string">    Measurement using RMSD of chain X</span></span><br><span class="line"><span class="string">  &lt;/SIMPLE_METRICS&gt;</span></span><br><span class="line"><span class="string">  &lt;SCORINGGRIDS ligand_chain=&quot;X&quot; width=&quot;25&quot;&gt;</span></span><br><span class="line"><span class="string">    &lt;ClassicGrid grid_name=&quot;vdw&quot; weight=&quot;1.0&quot;/&gt; </span></span><br><span class="line"><span class="string">    Grids are recalculated if any non-ligand atoms change position. </span></span><br><span class="line"><span class="string">    The weight specified for each grid is multiplied by the ligand score for that grid.</span></span><br><span class="line"><span class="string">  &lt;/SCORINGGRIDS&gt;</span></span><br><span class="line"><span class="string">  &lt;LIGAND_AREAS&gt;</span></span><br><span class="line"><span class="string">    &lt;LigandArea name=&quot;docking_sidechain_X&quot; chain=&quot;X&quot; cutoff=&quot;6.0&quot; add_nbr_radius=&quot;true&quot; all_atom_mode=&quot;true&quot; minimize_ligand=&quot;10&quot;/&gt;</span></span><br><span class="line"><span class="string">    &lt;LigandArea name=&quot;final_sidechain_X&quot; chain=&quot;X&quot; cutoff=&quot;6.0&quot; add_nbr_radius=&quot;true&quot; all_atom_mode=&quot;true&quot;/&gt;</span></span><br><span class="line"><span class="string">    &lt;LigandArea name=&quot;final_backbone_X&quot; chain=&quot;X&quot; cutoff=&quot;7.0&quot; add_nbr_radius=&quot;false&quot; all_atom_mode=&quot;true&quot; Calpha_restraints=&quot;0.3&quot;/&gt;</span></span><br><span class="line"><span class="string">  &lt;/LIGAND_AREAS&gt;</span></span><br><span class="line"><span class="string">  &lt;INTERFACE_BUILDERS&gt;</span></span><br><span class="line"><span class="string">    &lt;InterfaceBuilder name=&quot;side_chain_for_docking&quot; ligand_areas=&quot;docking_sidechain_X&quot;/&gt;</span></span><br><span class="line"><span class="string">    &lt;InterfaceBuilder name=&quot;side_chain_for_final&quot; ligand_areas=&quot;final_sidechain_X&quot;/&gt;</span></span><br><span class="line"><span class="string">    &lt;InterfaceBuilder name=&quot;backbone&quot; ligand_areas=&quot;final_backbone_X&quot; extension_window=&quot;3&quot;/&gt;</span></span><br><span class="line"><span class="string">  &lt;/INTERFACE_BUILDERS&gt;</span></span><br><span class="line"><span class="string">  &lt;MOVEMAP_BUILDERS&gt;</span></span><br><span class="line"><span class="string">    &lt;MoveMapBuilder name=&quot;docking&quot; sc_interface=&quot;side_chain_for_docking&quot; minimize_water=&quot;true&quot;/&gt;</span></span><br><span class="line"><span class="string">    &lt;MoveMapBuilder name=&quot;final&quot; sc_interface=&quot;side_chain_for_final&quot; bb_interface=&quot;backbone&quot; minimize_water=&quot;true&quot;/&gt;</span></span><br><span class="line"><span class="string">  &lt;/MOVEMAP_BUILDERS&gt;</span></span><br><span class="line"><span class="string">  &lt;MOVERS&gt;</span></span><br><span class="line"><span class="string">    &lt;SavePoseMover name=&quot;spm&quot; restore_pose=&quot;0&quot; reference_name=&quot;store_native&quot;/&gt;</span></span><br><span class="line"><span class="string">    &lt;Transform name=&quot;transform&quot; chain=&quot;X&quot; box_size=&quot;20.0&quot; move_distance=&quot;10&quot; angle=&quot;360&quot; initial_perturb=&quot;2&quot; cycles=&quot;500&quot; repeats=&quot;5&quot; temperature=&quot;1000&quot;/&gt;</span></span><br><span class="line"><span class="string">    &lt;HighResDocker name=&quot;high_res_docker&quot; cycles=&quot;9&quot; repack_every_Nth=&quot;3&quot; scorefxn=&quot;fa_standard&quot; movemap_builder=&quot;docking&quot;/&gt;</span></span><br><span class="line"><span class="string">    &lt;FinalMinimizer name=&quot;final&quot; scorefxn=&quot;fa_standard&quot; movemap_builder=&quot;final&quot;/&gt;</span></span><br><span class="line"><span class="string">  &lt;/MOVERS&gt;</span></span><br><span class="line"><span class="string">  &lt;FILTERS&gt;</span></span><br><span class="line"><span class="string">      &lt;LigInterfaceEnergy name=&quot;interfE&quot; scorefxn=&quot;fa_standard&quot; energy_cutoff=&quot;0.0&quot; confidence=&quot;0&quot;/&gt;</span></span><br><span class="line"><span class="string">      &lt;SimpleMetricFilter name=&quot;rmsd_chX&quot; metric=&quot;rmsd_chX&quot; cutoff=&quot;999999.&quot; comparison_type=&quot;lt&quot; confidence=&quot;0&quot;/&gt;</span></span><br><span class="line"><span class="string">  &lt;/FILTERS&gt;</span></span><br><span class="line"><span class="string">  &lt;PROTOCOLS&gt;</span></span><br><span class="line"><span class="string">    &lt;Add mover=&quot;spm&quot;/&gt;</span></span><br><span class="line"><span class="string">    &lt;Add mover=&quot;transform&quot;/&gt;</span></span><br><span class="line"><span class="string">    &lt;Add mover=&quot;high_res_docker&quot;/&gt;</span></span><br><span class="line"><span class="string">    &lt;Add mover=&quot;final&quot;/&gt;</span></span><br><span class="line"><span class="string">    &lt;Add filter=&quot;interfE&quot;/&gt;</span></span><br><span class="line"><span class="string">    &lt;Add filter=&quot;rmsd_chX&quot;/&gt;</span></span><br><span class="line"><span class="string">  &lt;/PROTOCOLS&gt;</span></span><br><span class="line"><span class="string">&lt;/ROSETTASCRIPTS&gt;</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span>).get_mover(<span class="string">&quot;ParsedProtocol&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>Copyright： </strong>
+          
+          Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2025/10/12/PyRosetta%20&%20Rosetta/PyRosetta%20(15)%20Rigid%20Body%20Movers/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/biochemistry/" rel="tag">biochemistry</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/note/" rel="tag">note</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/protein/" rel="tag">protein</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/protein-design/" rel="tag">protein design</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2025/10/12/PyRosetta%20&%20Rosetta/PyRosetta%20(16)%20Job%20Distributor/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            PyRosetta (16) Job Distributor
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2025/10/12/PyRosetta%20&%20Rosetta/PyRosetta%20(14)%20Keep%20Region%20Mover/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">PyRosetta (14) Keep Region Mover</div>
+      </a>
+    
+  </nav>
+
+  
+   
+  
+   
+    <script src="https://cdn.staticfile.org/twikoo/1.4.18/twikoo.all.min.js"></script>
+    <div id="twikoo" class="twikoo"></div>
+    <script>
+        twikoo.init({
+            envId: ""
+        })
+    </script>
+ 
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2024-2025
+        <i class="ri-heart-fill heart_icon"></i> Michael Law
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>Visitors:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>Views:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/logo.svg" alt="辰"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/friends">友链</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Search">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>

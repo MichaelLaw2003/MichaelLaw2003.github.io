@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-Hans">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>PyRosetta (13) Constraint Generator |  辰</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/favicon.ico" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    <link rel="alternate" href="/atom.xml" title="辰" type="application/atom+xml">
+</head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-PyRosetta &amp; Rosetta/PyRosetta (13) Constraint Generator Movers"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  PyRosetta (13) Constraint Generator
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2025/10/12/PyRosetta%20&%20Rosetta/PyRosetta%20(13)%20Constraint%20Generator%20Movers/" class="article-date">
+  <time datetime="2025-10-12T12:05:54.527Z" itemprop="datePublished">2025-10-12</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/protein-design/">protein design</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> Word count:</span>
+            <span class="post-count">1.1k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> Reading time≈</span>
+            <span class="post-count">6 min</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="PyRosetta-13-Constraint-Generator"><a href="#PyRosetta-13-Constraint-Generator" class="headerlink" title="PyRosetta (13): Constraint Generator"></a>PyRosetta (13): Constraint Generator</h1><h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><h3 id="Constraint-functions"><a href="#Constraint-functions" class="headerlink" title="Constraint functions"></a>Constraint functions</h3><h4 id="Harmonic-HARMONIC"><a href="#Harmonic-HARMONIC" class="headerlink" title="Harmonic: HARMONIC"></a>Harmonic: <code>HARMONIC</code></h4><p>A harmonic constraint uses a simple parabola (a squared function) to apply a penalty. </p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/gif/32767990/1756801826076-cb2bdec1-c6cc-4207-97cd-81cb505c5e28.gif">$ E&#x3D;(\frac{x−x_0}{\sigma})^2 $</p>
+<p> where $ \sigma $is a force constant, $ x $ is the measured value, and $ x_0 $ is the ideal value. </p>
+<p>![](PyRosetta (13) Constraint Generator Movers.assets&#x2F;1756802935061-72f8eb91-7309-4f80-81b3-c20f109b7a73.png)</p>
+<h4 id="Bounded-Flat-harmonic-FLAT-HARMONIC"><a href="#Bounded-Flat-harmonic-FLAT-HARMONIC" class="headerlink" title="Bounded (Flat harmonic: FLAT_HARMONIC)"></a>Bounded (Flat harmonic: <code>FLAT_HARMONIC</code>)</h4><p>A bounded constraint defines a flat-bottomed energy well. It has two key parameters: a minimum bound $ lb &#x3D; x_0 - t $ and a maximum bound $ ub &#x3D; x_0 + t $.</p>
+<p>Similar to <code>HARMONIC</code>, but is 0 (“flat”) around $ \pm $tolerance (t).</p>
+<p>$ E&#x3D;  (\frac{x−x_0}{\sigma})^2 - (\frac{t}{\sigma})^2, \ x\ge x_0 + t \ \text{or} \ x\le x_0 -t $</p>
+<p>$ E &#x3D; 0, \ x_0 - t \le x \le x_0 + t $</p>
+<p>![](PyRosetta (13) Constraint Generator Movers.assets&#x2F;1756802945356-1aba79e7-063a-4e4a-87de-818d86d4d6e0-1757296044272-5.png)</p>
+<p>If the measured value $ x $ is within the bounds ($ lb\le x\le ub\ $), the energy penalty is 0.</p>
+<p>If the measured value is outside the bounds $ x&lt;lb $ or $ x&gt;ub $, a penalty is applied that increases with the deviation, often harmonically.</p>
+<p>Behavior: Instead of a “spring”, it creates a “box” or “well”. Any conformation within the specified range is considered equally good and incurs no penalty. Only when the conformation leaves this range is it penalized.</p>
+<p>Best for situations where we want to allow some flexibility while preventing major structural excursions.</p>
+<h3 id="Ambiguous-Constraints"><a href="#Ambiguous-Constraints" class="headerlink" title="Ambiguous Constraints"></a>Ambiguous Constraints</h3><p>For certain amino acids, the position of an atom can be ambiguous due to the symmetry of the sidechain or because the sidechain can adopt different rotamers. </p>
+<p>How ambiguous constraints work:</p>
+<ul>
+<li>In the sidechains of these three amino acids, certain atoms can swap positions. For example, in asparagine, the oxygen (OD1) and nitrogen (ND2) can swap places.</li>
+<li>During a minimization step, the constraint would tether the atom to whichever of its ambiguous reference positions is currently closer. This allows the sidechain to flip between rotamers without incurring a large energy penalty from the constraint.</li>
+</ul>
+<h2 id="CoordinateConstraintGenerator"><a href="#CoordinateConstraintGenerator" class="headerlink" title="CoordinateConstraintGenerator"></a><code>CoordinateConstraintGenerator</code></h2><h3 id="Instantiation-of-CoordinateConstraintGenerator"><a href="#Instantiation-of-CoordinateConstraintGenerator" class="headerlink" title="Instantiation of CoordinateConstraintGenerator"></a>Instantiation of <code>CoordinateConstraintGenerator</code></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">coord_constraint_gen = pyrosetta.rosetta.protocols.constraint_generator.CoordinateConstraintGenerator()</span><br></pre></td></tr></table></figure>
+
+<h3 id="Example-of-CoordinateConstraintGenerator"><a href="#Example-of-CoordinateConstraintGenerator" class="headerlink" title="Example of CoordinateConstraintGenerator"></a>Example of <code>CoordinateConstraintGenerator</code></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">coord_constraint_gen = pyrosetta.rosetta.protocols.constraint_generator.CoordinateConstraintGenerator()</span><br></pre></td></tr></table></figure>
+
+<h4 id="Setup-Constrants"><a href="#Setup-Constrants" class="headerlink" title="Setup Constrants"></a>Setup Constrants</h4><p>WARNING: It is recomended to add a virtual root before adding constraints</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">true_selector = pyrosetta.rosetta.core.select.residue_selector.TrueResidueSelector() <span class="comment"># Select all residues</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Construct the CoordinateConstraintGenerator</span></span><br><span class="line">coord_constraint_gen = pyrosetta.rosetta.protocols.constraint_generator.CoordinateConstraintGenerator()</span><br><span class="line">coord_constraint_gen.set_id(<span class="string">&quot;contrain_all_backbone_atoms!&quot;</span>)</span><br><span class="line">coord_constraint_gen.set_ambiguous_hnq(<span class="literal">False</span>)</span><br><span class="line">coord_constraint_gen.set_bounded(<span class="literal">False</span>)</span><br><span class="line">coord_constraint_gen.set_sidechain(<span class="literal">False</span>)</span><br><span class="line">coord_constraint_gen.set_sd(<span class="number">1.0</span>) </span><br><span class="line">coord_constraint_gen.set_ca_only(<span class="literal">False</span>)</span><br><span class="line">coord_constraint_gen.set_residue_selector(true_selector)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Apply the CoordinateConstraintGenerator using the AddConstraints mover</span></span><br><span class="line">add_constraints = pyrosetta.rosetta.protocols.constraint_generator.AddConstraints()</span><br><span class="line">add_constraints.add_generator(coord_constraint_gen)</span><br><span class="line">add_constraints.apply(pose)</span><br></pre></td></tr></table></figure>
+
+<h4 id="Remove-Constraints"><a href="#Remove-Constraints" class="headerlink" title="Remove Constraints"></a>Remove Constraints</h4><p>Remove constraints before direct (manual) pose manipulation.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">remove_constraints = pyrosetta.rosetta.protocols.constraint_generator.RemoveConstraints()</span><br><span class="line">remove_constraints.add_generator(coord_constraint_gen)</span><br><span class="line">remove_constraints.apply(pose)</span><br></pre></td></tr></table></figure>
+
+<h3 id="Configuration-Options-of-CoordinateConstraintGenerator"><a href="#Configuration-Options-of-CoordinateConstraintGenerator" class="headerlink" title="Configuration Options of CoordinateConstraintGenerator"></a>Configuration Options of <code>CoordinateConstraintGenerator</code></h3><h4 id="Set-ID-for-CoordinateConstraintGenerator"><a href="#Set-ID-for-CoordinateConstraintGenerator" class="headerlink" title="Set ID for CoordinateConstraintGenerator"></a>Set ID for <code>CoordinateConstraintGenerator</code></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">coord_constraint_gen.set_id(<span class="string">&quot;contrain_all_backbone_atoms!&quot;</span>) </span><br><span class="line"><span class="comment"># Set the identifier of this generator</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="set-ambiguous-hnq"><a href="#set-ambiguous-hnq" class="headerlink" title="set_ambiguous_hnq"></a><code>set_ambiguous_hnq</code></h4><p><code>set_ambiguous_hnq</code> is a hardcoded shortcut to enable&#x2F;disable tracking of both possible symmetrical positions for ambiguous-hydrgen-related atoms in Histone, Asparagine and Glutamine.</p>
+<p>If set to false, the constraint generator will apply a standard, non-ambiguous constraint to the specified atom positions.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">coord_constraint_gen.set_ambiguous_hnq(<span class="literal">False</span>) </span><br><span class="line"><span class="comment"># Histone, Asparagine, and Glutamine</span></span><br></pre></td></tr></table></figure>
+
+<p>NOTICE: ambiguous atoms also exists in Asparatate (D), Glutamate (E), Phenyalanine (F), tyrosine (Y). D and E are handled by Rosetta Atom Types (OOC). And the built-in packer explores both symmetrical orientations of the ring. To specify customized constraints, use<code>**AmbiguousConstraint**</code>in a constraint file.</p>
+<h4 id="Switch-between-bounded-or-harmonic-constraints"><a href="#Switch-between-bounded-or-harmonic-constraints" class="headerlink" title="Switch between bounded or harmonic constraints"></a>Switch between bounded or harmonic constraints</h4><p>whether to use harmonic (false) or bounded (true) constraints</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">coord_constraint_gen.set_bounded(true)</span><br><span class="line"><span class="comment"># If set bounded true:</span></span><br><span class="line">coord_constraint_gen.set_bounded_width(<span class="number">0.5</span>)</span><br></pre></td></tr></table></figure>
+
+<h4 id="Constraint-all-constraint-backbone"><a href="#Constraint-all-constraint-backbone" class="headerlink" title="Constraint all &#x2F; constraint backbone"></a>Constraint all &#x2F; constraint backbone</h4><p>Constrain all heavy atoms (false), or only backbone heavy atoms (true)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">coord_constraint_gen.set_sidechain(<span class="literal">False</span>)</span><br></pre></td></tr></table></figure>
+
+<h4 id="Standard-deviation-RMSD-constraints"><a href="#Standard-deviation-RMSD-constraints" class="headerlink" title="Standard deviation RMSD constraints"></a>Standard deviation RMSD constraints</h4><p>The strength&#x2F;deviation of the constraints to use.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">Sets a standard deviation of contrained atoms to (an arbitrary) 1.0 Angstroms RMSD. </span></span><br><span class="line"><span class="string">Set higher or lower for different results.</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line">coord_constraint_gen.set_sd(<span class="number">1.0</span>) </span><br></pre></td></tr></table></figure>
+
+<h4 id="CA-only"><a href="#CA-only" class="headerlink" title="CA only"></a>CA only</h4><p>Only CA atoms are constrained.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">coord_constraint_gen.set_ca_only(<span class="literal">False</span>)</span><br></pre></td></tr></table></figure>
+
+<h4 id="Apply-to-a-Selector-object"><a href="#Apply-to-a-Selector-object" class="headerlink" title="Apply to a Selector object"></a>Apply to a <code>Selector</code> object</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">coord_constraint_gen.set_residue_selector(my_selector)</span><br></pre></td></tr></table></figure>
+
+<h4 id="AddCompositionConstraintMover-from-XML"><a href="#AddCompositionConstraintMover-from-XML" class="headerlink" title="AddCompositionConstraintMover from XML"></a><code>AddCompositionConstraintMover</code> from XML</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">add_composition_constraint = pyrosetta.rosetta.protocols.aa_composition.AddCompositionConstraintMover()</span><br><span class="line">add_composition_constraint.create_constraint_from_file_contents(<span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">PENALTY_DEFINITION</span></span><br><span class="line"><span class="string">OR_PROPERTIES AROMATIC ALIPHATIC</span></span><br><span class="line"><span class="string">NOT_TYPE LEU</span></span><br><span class="line"><span class="string">FRACT_DELTA_START -0.05</span></span><br><span class="line"><span class="string">FRACT_DELTA_END 0.05</span></span><br><span class="line"><span class="string">PENALTIES 1 0 1 # The above two lines mean that if we&#x27;re 5% below or 5% above the desired content, we get a 1-point penalty.</span></span><br><span class="line"><span class="string">FRACTION 0.4 # Forty percent aromatic or aliphatic, but not leucine</span></span><br><span class="line"><span class="string">BEFORE_FUNCTION CONSTANT</span></span><br><span class="line"><span class="string">AFTER_FUNCTION CONSTANT</span></span><br><span class="line"><span class="string">END_PENALTY_DEFINITION</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">PENALTY_DEFINITION</span></span><br><span class="line"><span class="string">TYPE LEU</span></span><br><span class="line"><span class="string">DELTA_START -1</span></span><br><span class="line"><span class="string">DELTA_END 1</span></span><br><span class="line"><span class="string">PENALTIES 1 0 1</span></span><br><span class="line"><span class="string">FRACTION 0.05 # Five percent leucine</span></span><br><span class="line"><span class="string">BEFORE_FUNCTION CONSTANT</span></span><br><span class="line"><span class="string">AFTER_FUNCTION CONSTANT</span></span><br><span class="line"><span class="string">END_PENALTY_DEFINITION</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span>)</span><br><span class="line">add_composition_constraint.add_residue_selector(chain_A)</span><br><span class="line">add_composition_constraint.apply(pose)</span><br></pre></td></tr></table></figure>
+
+<h2 id="AddHelixSequenceConstraintsMover"><a href="#AddHelixSequenceConstraintsMover" class="headerlink" title="AddHelixSequenceConstraintsMover"></a><code>AddHelixSequenceConstraintsMover</code></h2><p> Apply the AddHelixSequenceConstraints mover, which utilizes the aa_composition scoreterm. By default, this mover adds five types of sequence constraints to the designable residues in each alpha helix in the pose. Any of these behaviours may be disabled or modified by invoking advanced options, but no advanced options need be set in most cases. The five types of sequence constraints are:</p>
+<ol>
+<li>A strong sequence constraint requiring at least two negatively-charged residues in the first (N-terminal) three residues of each alpha-helix.</li>
+<li>A strong sequence constraint requiring at least two positively-charged residues in the last (C-terminal) three residues of each alpha-helix.</li>
+<li>A weak but strongly ramping sequence constraint penalizing helix-disfavoring residue types (by default, Asn, Asp, Ser, Gly, Thr, and Val) throughout each helix. (A single such residue is sometimes tolerated, but the penalty for having more than one residue in this category increases quadratically with the count of helix-disfavouring residues.)</li>
+<li>A weak sequence constraint coaxing the helix to have 10% alanine. Because this constraint is weak, deviations from this value are tolerated, but this should prevent an excessive abundance of alanine residues.</li>
+<li>A weak sequence constraint coaxing the helix to have at least 25% hydrophobic content. This constraint is also weak, so slightly less hydrophobic helices will be tolerated to some degree. Note that alanine is not considered to be “hydrophobic” within Rosetta.</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">add_helix_sequence_constraints = pyrosetta.rosetta.protocols.aa_composition.AddHelixSequenceConstraintsMover()</span><br><span class="line">add_helix_sequence_constraints.set_residue_selector(chain_A)</span><br><span class="line">add_helix_sequence_constraints.apply(my_pose)</span><br></pre></td></tr></table></figure>
+
+<h2 id="AddNetChargeConstraintMover"><a href="#AddNetChargeConstraintMover" class="headerlink" title="AddNetChargeConstraintMover"></a><code>AddNetChargeConstraintMover</code></h2><p>Apply the AddNetChargeConstraintMover mover, which utilizes the netcharge scoreterm. </p>
+<p>We require that the net charge in selected region must be exactly 0.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">add_net_charge_constraint = pyrosetta.rosetta.protocols.aa_composition.AddNetChargeConstraintMover()</span><br><span class="line">add_net_charge_constraint.create_constraint_from_file_contents(<span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">DESIRED_CHARGE 0 #Desired net charge is zero.</span></span><br><span class="line"><span class="string">PENALTIES_CHARGE_RANGE -1 1 #Penalties are listed in the observed net charge range of -1 to +1.</span></span><br><span class="line"><span class="string">PENALTIES 1 0 1 #The penalties are 1 for an observed charge of -1, 0 for an observed charge of 0, and 1 for an observed charge of +1.</span></span><br><span class="line"><span class="string">BEFORE_FUNCTION QUADRATIC #Ramp quadratically for observed net charges of -2 or less.</span></span><br><span class="line"><span class="string">AFTER_FUNCTION QUADRATIC #Ramp quadratically for observed net charges of +2 or greater.</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span>)</span><br><span class="line">add_net_charge_constraint.add_residue_selector(chain_A)</span><br><span class="line">add_net_charge_constraint.apply(my_pose)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/58897635">https://zhuanlan.zhihu.com/p/58897635</a></p>
+<p><a target="_blank" rel="noopener" href="https://docs.rosettacommons.org/docs/latest/scripting_documentation/RosettaScripts/Movers/movers_pages/constraint_generators/constraint_generators/CoordinateConstraintGenerator">CoordinateConstraintGenerator</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>Copyright： </strong>
+          
+          Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2025/10/12/PyRosetta%20&%20Rosetta/PyRosetta%20(13)%20Constraint%20Generator%20Movers/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/biochemistry/" rel="tag">biochemistry</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/note/" rel="tag">note</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/protein/" rel="tag">protein</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/protein-design/" rel="tag">protein design</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2025/10/12/PyRosetta%20&%20Rosetta/PyRosetta%20(14)%20Keep%20Region%20Mover/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            PyRosetta (14) Keep Region Mover
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2025/10/12/PyRosetta%20&%20Rosetta/PyRosetta%20(12)%20Virtual-Root%20Mover/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">PyRosetta (12) VirtualRoot Mover</div>
+      </a>
+    
+  </nav>
+
+  
+   
+  
+   
+    <script src="https://cdn.staticfile.org/twikoo/1.4.18/twikoo.all.min.js"></script>
+    <div id="twikoo" class="twikoo"></div>
+    <script>
+        twikoo.init({
+            envId: ""
+        })
+    </script>
+ 
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2024-2025
+        <i class="ri-heart-fill heart_icon"></i> Michael Law
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>Visitors:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>Views:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/logo.svg" alt="辰"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/friends">友链</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Search">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>

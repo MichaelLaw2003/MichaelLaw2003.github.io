@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-Hans">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>PyRosetta (5) Score Function |  辰</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/favicon.ico" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    <link rel="alternate" href="/atom.xml" title="辰" type="application/atom+xml">
+</head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-PyRosetta &amp; Rosetta/PyRosetta (5) Score Function"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  PyRosetta (5) Score Function
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2025/10/12/PyRosetta%20&%20Rosetta/PyRosetta%20(5)%20Score%20Function/" class="article-date">
+  <time datetime="2025-10-12T12:05:44.182Z" itemprop="datePublished">2025-10-12</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/protein-design/">protein design</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> Word count:</span>
+            <span class="post-count">859</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> Reading time≈</span>
+            <span class="post-count">5 min</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="PyRosetta-5-Score-Function"><a href="#PyRosetta-5-Score-Function" class="headerlink" title="PyRosetta (5): Score Function"></a>PyRosetta (5): Score Function</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">!pip install pyrosettacolabsetup</span><br><span class="line"><span class="keyword">import</span> pyrosettacolabsetup; pyrosettacolabsetup.install_pyrosetta()</span><br><span class="line"><span class="keyword">import</span> pyrosetta; pyrosetta.init()</span><br><span class="line"><span class="keyword">import</span> pyrosetta</span><br><span class="line">pyrosetta.init()</span><br></pre></td></tr></table></figure>
+
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>Rosetta scores the energy of a <code>pose</code>object with a score function.</p>
+<p>The lower the enegy, the more stable the pose.</p>
+<p>The score function is an object of <code>pyrosetta.ScoreFunction</code> class.</p>
+<p>The total score is a sum of per-residue score.</p>
+<p>The unweighted value of energy terms (of each residue) is stored in the <code>pose</code>object, and can be visited via <code>Pose.energies</code>method. (See <a target="_blank" rel="noopener" href="https://www.yuque.com/yuqueyonghu2r84jv/zmy8pd/ktcfk65y26wfqciw">Note | PyRosetta Basics (1): Pose</a>)</p>
+<p>The score function stores a series of weights correspond to each energy term, and calculate the total score.</p>
+<p><a target="_blank" rel="noopener" href="https://docs.rosettacommons.org/docs/latest/rosetta_basics/scoring/score-types">Energy Terms In Rosetta</a></p>
+<p><a target="_blank" rel="noopener" href="https://docs.rosettacommons.org/docs/latest/rosetta_basics/scoring/centroid-score-terms">Centroid score terms and score functions in Rosetta</a></p>
+<p><a target="_blank" rel="noopener" href="https://graylab.jhu.edu/PyRosetta.documentation/pyrosetta.rosetta.core.scoring.html">Scoring PyRosetta 4.0 document</a></p>
+<h2 id="Instantiation-of-ScoreFunction"><a href="#Instantiation-of-ScoreFunction" class="headerlink" title="Instantiation of ScoreFunction"></a>Instantiation of <code>ScoreFunction</code></h2><p><a target="_blank" rel="noopener" href="https://docs.rosettacommons.org/docs/latest/rosetta_basics/scoring/centroid-score-terms">Centroid score terms and score functions in Rosetta</a></p>
+<h3 id="Empty-score-function"><a href="#Empty-score-function" class="headerlink" title="Empty score function"></a>Empty score function</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sfxn = ScoreFunction() <span class="comment">#sfxn is an empty `score_function` object</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># and we can manually set the weights</span></span><br><span class="line">sfxn.set_weight(fa_atr, <span class="number">1.0</span>) </span><br><span class="line">sfxn.set_weight(fa_rep, <span class="number">1.0</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="teaching-get-score-functionmethod"><a href="#teaching-get-score-functionmethod" class="headerlink" title="teaching.get_score_functionmethod"></a><code>teaching.get_score_function</code>method</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pyrosetta.teaching <span class="keyword">import</span> *</span><br><span class="line">sfxn = get_score_function(<span class="literal">True</span>) </span><br><span class="line"><span class="comment"># get_score_function(is_fullatom: bool) in pyrosetta.teaching namespace</span></span><br><span class="line"><span class="comment"># True: default ref2015 all-atom energy function</span></span><br><span class="line"><span class="comment"># False: default centroid score function</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cen_sfxn = pyrosetta.create_score_function(<span class="string">&quot;score0&quot;</span>) </span><br><span class="line"><span class="comment"># a centroid score function</span></span><br><span class="line"><span class="comment"># score function used in the first stage of the ClassicAbInitio protocol</span></span><br><span class="line"><span class="comment"># https://docs.rosettacommons.org/docs/latest/rosetta_basics/scoring/centroid-score-terms</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="get-fa-scorefxnmethod-the-default-ref2015-function"><a href="#get-fa-scorefxnmethod-the-default-ref2015-function" class="headerlink" title="get_fa_scorefxnmethod (the default ref2015 function)"></a><code>get_fa_scorefxn</code>method (the default ref2015 function)</h3><p>The <code>get_fa_scorefxn()</code> method is a wrapper of a method within <code>ScoreFunctionFactory</code> which returns the current standard <code>ScoreFunction</code>.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scorefxn = get_fa_scorefxn()</span><br><span class="line">scorefxn(my_pose)</span><br></pre></td></tr></table></figure>
+
+<h3 id="create-score-function-specify-a-weights-tag"><a href="#create-score-function-specify-a-weights-tag" class="headerlink" title="create_score_function(specify a weights_tag)"></a><code>create_score_function</code>(specify a <code>weights_tag</code>)</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cart_sf = create_score_function(<span class="string">&quot;ref2015_cart&quot;</span>) <span class="comment"># Cartesian for Regional FastRelax</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Score-a-pose"><a href="#Score-a-pose" class="headerlink" title="Score a pose"></a>Score a pose</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">my_pose = pyrosetta.pose_from_pdb(<span class="string">&quot;inputs/6Q21_A.pdb&quot;</span>) <span class="comment"># instantiate a `pose` object</span></span><br><span class="line">my_score = sfxn(my_pose)</span><br><span class="line"><span class="comment"># my_score is the total score; type is float</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="ScoreFunction-methods"><a href="#ScoreFunction-methods" class="headerlink" title="ScoreFunction methods"></a><code>ScoreFunction</code> methods</h2><h3 id="Show-energy-terms-in-detail"><a href="#Show-energy-terms-in-detail" class="headerlink" title="Show energy terms in detail"></a>Show energy terms in detail</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">my_sfxn.show(my_pose)</span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">&gt;&gt;&gt;</span></span><br><span class="line"><span class="string">core.scoring: </span></span><br><span class="line"><span class="string">------------------------------------------------------------</span></span><br><span class="line"><span class="string"> Scores                       Weight   Raw Score Wghtd.Score</span></span><br><span class="line"><span class="string">------------------------------------------------------------</span></span><br><span class="line"><span class="string"> fa_atr                       1.000   -1039.246   -1039.246</span></span><br><span class="line"><span class="string"> fa_rep                       0.550    1193.837     656.611</span></span><br><span class="line"><span class="string"> fa_sol                       1.000     682.582     682.582</span></span><br><span class="line"><span class="string"> fa_intra_rep                 0.005     700.419       3.502</span></span><br><span class="line"><span class="string"> fa_intra_sol_xover4          1.000      46.564      46.564</span></span><br><span class="line"><span class="string"> lk_ball_wtd                  1.000     -14.597     -14.597</span></span><br><span class="line"><span class="string"> fa_elec                      1.000    -195.387    -195.387</span></span><br><span class="line"><span class="string"> pro_close                    1.250      97.210     121.513</span></span><br><span class="line"><span class="string"> hbond_sr_bb                  1.000     -41.656     -41.656</span></span><br><span class="line"><span class="string"> hbond_lr_bb                  1.000     -28.352     -28.352</span></span><br><span class="line"><span class="string"> hbond_bb_sc                  1.000     -13.111     -13.111</span></span><br><span class="line"><span class="string"> hbond_sc                     1.000      -7.771      -7.771</span></span><br><span class="line"><span class="string"> dslf_fa13                    1.250       0.000       0.000</span></span><br><span class="line"><span class="string"> omega                        0.400      41.525      16.610</span></span><br><span class="line"><span class="string"> fa_dun                       0.700    1296.642     907.650</span></span><br><span class="line"><span class="string"> p_aa_pp                      0.600     -25.496     -15.298</span></span><br><span class="line"><span class="string"> yhh_planarity                0.625       0.000       0.000</span></span><br><span class="line"><span class="string"> ref                          1.000      47.114      47.114</span></span><br><span class="line"><span class="string"> rama_prepro                  0.450     197.781      89.002</span></span><br><span class="line"><span class="string">---------------------------------------------------</span></span><br><span class="line"><span class="string"> Total weighted score:                     1215.729</span></span><br><span class="line"><span class="string"> &#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Show-Intrinsic-weights-of-a-scoring-function"><a href="#Show-Intrinsic-weights-of-a-scoring-function" class="headerlink" title="Show Intrinsic weights of a scoring function"></a>Show Intrinsic weights of a scoring function</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">scorefxn = get_fa_scorefxn() </span><br><span class="line"><span class="comment"># First create object by calling wrapped methods in `get_fa_scorefxn()`</span></span><br><span class="line">scorefxn.weights()[fa_atr]</span><br><span class="line"><span class="comment"># Then get data from the `scorefxn` object</span></span><br></pre></td></tr></table></figure>
+
+<p>Or, use <code>ScoreFunction</code>class:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">scorefxn = ScoreFunction()</span><br><span class="line"><span class="comment"># First create object by calling wrapped methods in `get_fa_scorefxn()`</span></span><br><span class="line">scorefxn.weights()[fa_atr]</span><br><span class="line"><span class="comment"># Then get data from the `scorefxn` object</span></span><br></pre></td></tr></table></figure>
+
+<p>WARNING: The following usage is incorrect:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">get_fa_scorefxn().weights()[fa_atr] <span class="comment">#incorrect; returns 0.0</span></span><br></pre></td></tr></table></figure>
+
+<p>Although the following lines do not cause mistakes, chain calling is a depreciated practice.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ScoreFunction().weights()[fa_atr]</span><br><span class="line"><span class="comment"># This creates an object `ScoreFunction`, </span></span><br><span class="line"><span class="comment">#  and then shows the default weight of the term `fa_atr`</span></span><br><span class="line"><span class="comment"># Works fine, but depreciated.</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="EMapVectorclass"><a href="#EMapVectorclass" class="headerlink" title="EMapVectorclass"></a><code>EMapVector</code>class</h2><h3 id="Introduction-1"><a href="#Introduction-1" class="headerlink" title="Introduction"></a>Introduction</h3><p><code>EMapVector</code>class is an auxiliary class for energy.</p>
+<p>An instance of the <code>EMapVector</code> class is a vector that can be used to stores energies.</p>
+<h3 id="Example-Analyzing-energy-between-residues"><a href="#Example-Analyzing-energy-between-residues" class="headerlink" title="Example: Analyzing energy between residues"></a>Example: Analyzing energy between residues</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">my_pose = pyrosetta.toolbox.pose_from_rcsb(<span class="string">&quot;1YY9&quot;</span>) </span><br><span class="line"><span class="comment"># instantiate a `pose` object</span></span><br><span class="line"></span><br><span class="line">residue_102_id = my_pose.pdb_info().pdb2pose(<span class="string">&quot;D&quot;</span>, <span class="number">102</span>) </span><br><span class="line"><span class="comment"># get pose id of residue #102(PDB) on chain D</span></span><br><span class="line">residue_408_id = my_pose.pdb_info().pdb2pose(<span class="string">&quot;A&quot;</span>, <span class="number">408</span>) </span><br><span class="line"><span class="comment"># get pose id of residue #408(PDB) on chain A</span></span><br><span class="line"></span><br><span class="line">residue_102 = my_pose.residue(residue_102_id)</span><br><span class="line">residue_408 = my_pose.residue(residue_408_id)</span><br><span class="line"><span class="comment"># get `residue` objects</span></span><br><span class="line"></span><br><span class="line">my_emap = EMapVector() </span><br><span class="line"><span class="comment"># Instantiate an empty `e_map_vector` object</span></span><br><span class="line"></span><br><span class="line">sfxn = get_score_function(<span class="literal">True</span>) </span><br><span class="line"><span class="comment"># Create a score function `sfxn` using</span></span><br><span class="line"><span class="comment">#  pyrosetta.teaching.get_score_function(); ref2015 scoring function</span></span><br><span class="line"></span><br><span class="line">sfxn.eval_ci_2b(residue_102, residue_408, my_pose, my_emap)</span><br><span class="line"><span class="comment"># Analyzing energy between residues #102(chain D, PDB) and #408(chain A, PDB)</span></span><br><span class="line"><span class="comment"># The outputs are stored in my_emap</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(emap[fa_atr])</span><br><span class="line"><span class="built_in">print</span>(emap[fa_rep])</span><br><span class="line"><span class="built_in">print</span>(emap[fa_sol])</span><br><span class="line"><span class="comment"># visit and print the energy terms that are stored in emap</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="SwitchResidueTypeSetMover-class"><a href="#SwitchResidueTypeSetMover-class" class="headerlink" title="SwitchResidueTypeSetMover class"></a><code>SwitchResidueTypeSetMover</code> class</h2><p>An instance of the <code>SwitchResidueTypeSetMover</code> class is a <code>mover</code> that switches the energy landscape of a pose.</p>
+<ul>
+<li>“centroid”: a simplified, smooth energy landscape; easy to navigate; fast</li>
+<li>“fa_standard”:  a full-atom landscape; rough and sharp; accurate</li>
+</ul>
+<p>PyRosetta uses different energy terms and different scoring functions for these two energy landscape.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># assume that we have a `pose` object my_pose</span></span><br><span class="line">c_switch = SwitchResidueTypeSetMover(<span class="string">&quot;centroid&quot;</span>) </span><br><span class="line"><span class="comment"># `c_switch` is an object that can switch a pose to low-resolution (centroid) energy landscape</span></span><br><span class="line">switch.apply(my_pose) <span class="comment"># apply switch to my_pose</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fa_switch = SwitchResidueTypeSetMover(<span class="string">&quot;fa_standard&quot;</span>)</span><br><span class="line"><span class="comment"># `fa_switch` is an object that can switch a pose to high-resolution (full atom) energy landscape</span></span><br><span class="line">switch.apply(my_pose)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Notes-on-Energy-Terms-ScoreType"><a href="#Notes-on-Energy-Terms-ScoreType" class="headerlink" title="Notes on Energy Terms ScoreType"></a>Notes on Energy Terms <code>ScoreType</code></h2><h3 id="Introduction-2"><a href="#Introduction-2" class="headerlink" title="Introduction"></a>Introduction</h3><p>namespace: <code>pyrosetta.rosetta.core.scoring</code>.</p>
+<p>E.g. </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">scorefxn = get_fa_scorefxn()</span><br><span class="line">scorefxn(pose)</span><br><span class="line">energies = pose.energies()</span><br><span class="line"><span class="comment">#print(energies.residue_total_energies(49))</span></span><br><span class="line"><span class="built_in">print</span>(energies.residue_total_energies(<span class="number">49</span>)[pyrosetta.rosetta.core.scoring.fa_dun])</span><br></pre></td></tr></table></figure>
+
+<h3 id="Notes-on-Abbreviations"><a href="#Notes-on-Abbreviations" class="headerlink" title="Notes on Abbreviations"></a>Notes on Abbreviations</h3><p><code>fa_*</code> indicates that this term is measured in a “full atom” energy landscape.</p>
+<p><code>bb</code> means backbone.</p>
+<p><code>sc </code>means side chain.</p>
+<p><code>vdw</code> for Van der Waal.</p>
+<p><code>fa_dun</code> for Dunbrak Energies (of the side chain)</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>Copyright： </strong>
+          
+          Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2025/10/12/PyRosetta%20&%20Rosetta/PyRosetta%20(5)%20Score%20Function/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/biochemistry/" rel="tag">biochemistry</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/note/" rel="tag">note</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/protein/" rel="tag">protein</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/protein-design/" rel="tag">protein design</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2025/10/12/PyRosetta%20&%20Rosetta/PyRosetta%20(6)%20Backbone%20Folding/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            PyRosetta (6) Movers for Backbone Folding
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2025/10/12/PyRosetta%20&%20Rosetta/PyRosetta%20(4)%20Rosetta%20Scripts%20Parser/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">PyRosetta (4) Rosetta Scripts Parser</div>
+      </a>
+    
+  </nav>
+
+  
+   
+  
+   
+    <script src="https://cdn.staticfile.org/twikoo/1.4.18/twikoo.all.min.js"></script>
+    <div id="twikoo" class="twikoo"></div>
+    <script>
+        twikoo.init({
+            envId: ""
+        })
+    </script>
+ 
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2024-2025
+        <i class="ri-heart-fill heart_icon"></i> Michael Law
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>Visitors:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>Views:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/logo.svg" alt="辰"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/friends">友链</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Search">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>
