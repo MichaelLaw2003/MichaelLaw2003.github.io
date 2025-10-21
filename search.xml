@@ -116,8 +116,8 @@
   <entry>
     <title>Biochemistry terms in Rosetta</title>
     <url>/2025/10/12/PyRosetta%20&amp;%20Rosetta/Biochemistry%20Terms/</url>
-    <content><![CDATA[<h2 id="Amino-Acids-table"><a href="#Amino-Acids-table" class="headerlink" title="Amino Acids table"></a>Amino Acids table</h2><p>![](Biochemistry Terms.assets&#x2F;1756448806829-c0b0ec2d-e68b-42b3-beae-8f01b8f3befa.png)</p>
-<p>![](Biochemistry Terms.assets&#x2F;1756457007528-dfa3cb12-1a67-4220-bae3-5618147d4bd9.png)</p>
+    <content><![CDATA[<h2 id="Amino-Acids-table"><a href="#Amino-Acids-table" class="headerlink" title="Amino Acids table"></a>Amino Acids table</h2><p>![](Biochemistry Terms&#x2F;1756448806829-c0b0ec2d-e68b-42b3-beae-8f01b8f3befa.png)</p>
+<p>![](Biochemistry Terms&#x2F;1756457007528-dfa3cb12-1a67-4220-bae3-5618147d4bd9.png)</p>
 <p>*NOTICE: Selenocysteine is not a component of natural proteins.</p>
 <h2 id="Atom-name-definition"><a href="#Atom-name-definition" class="headerlink" title="Atom name definition"></a>Atom name definition</h2><p>Starting from nitrogen in $ -NH_2 $ group (defined as “N”) in the backbone, the carbon atom connected to it, that is, the central carbon, is defined as “$ C_\alpha $” or “CA”, and the adjacent carbon in $ -COOH $ group in the backbone is defined as “C”. Other carbon atoms, accroding to their distances to $ C_\alpha $, are correspondingly defined as $ C_{\beta} $(CB), $ C_{\gamma} $(CG), $ C_{\delta} $(CD), $ C_{\epsilon} $(CE), $ C_{\zeta} $(CZ), $ C_{\eta} $(CH).</p>
 <h2 id="Ramachandran-dihedrals"><a href="#Ramachandran-dihedrals" class="headerlink" title="Ramachandran dihedrals"></a><strong>Ramachandran dihedrals</strong></h2><p>The two torsion angles of the polypeptide chain, also called <strong>Ramachandran angles</strong>, describe the rotations of the polypeptide backbone around the bonds between:</p>
@@ -126,26 +126,27 @@
 <li>Cα-C (angle between $ N_i $and $ N_{i+1} $, called Psi, ψ) </li>
 <li>C-N (peptide bond, angle between $ C_{\alpha \ i-1} $and $ C_{\alpha \ i} $, denoted Omega, $ \omega $)</li>
 </ol>
-<h3 id="Biochemistry-Terms-assets-1754906512373-ccbd22a8-3030-4ba9-9ff1-2170831fcbb6-jpeg"><a href="#Biochemistry-Terms-assets-1754906512373-ccbd22a8-3030-4ba9-9ff1-2170831fcbb6-jpeg" class="headerlink" title="![](Biochemistry Terms.assets&#x2F;1754906512373-ccbd22a8-3030-4ba9-9ff1-2170831fcbb6.jpeg)"></a>![](Biochemistry Terms.assets&#x2F;1754906512373-ccbd22a8-3030-4ba9-9ff1-2170831fcbb6.jpeg)</h3><p>![](Biochemistry Terms.assets&#x2F;1754891261167-472a5b30-b731-4c1d-9750-8d2a36f46a44.png)</p>
+<p>![](Biochemistry Terms&#x2F;1754906512373-ccbd22a8-3030-4ba9-9ff1-2170831fcbb6.jpeg)</p>
+<p>![](Biochemistry Terms&#x2F;1754891261167-472a5b30-b731-4c1d-9750-8d2a36f46a44.png)</p>
 <p>In most cases, $ \omega $&#x3D; 180°. </p>
 <p>In very rare cases, $ \omega $&#x3D; 0° (Not energetically favorable.)</p>
-<p>![](Biochemistry Terms.assets&#x2F;1754973177592-8e40a126-d1a5-415b-bb53-8da85d008415.png)</p>
-<p>![](Biochemistry Terms.assets&#x2F;1754982392808-f76bc423-469c-4dbf-96b3-146d8a1e761c.png)</p>
+<p>![](Biochemistry Terms&#x2F;1754973177592-8e40a126-d1a5-415b-bb53-8da85d008415.png)</p>
+<p>![](Biochemistry Terms&#x2F;1754982392808-f76bc423-469c-4dbf-96b3-146d8a1e761c.png)</p>
 <p>phi &#x3D; −64.8°, psi &#x3D; -41.0° for left handed α-helix, </p>
 <p>phi &#x3D; -135.0°, psi &#x3D; 135.0° for beta-strand, </p>
 <p>and around phi &#x3D; 60°, psi &#x3D; 40° for L-helix</p>
 <p>Ramachandran angles in Rosetta： <a href="https://docs.rosettacommons.org/docs/latest/scripting_documentation/RosettaScripts/Movers/movers_pages/MakeBundleMover">https://docs.rosettacommons.org/docs/latest/scripting_documentation&#x2F;RosettaScripts&#x2F;Movers&#x2F;movers_pages&#x2F;MakeBundleMover</a></p>
 <p><code>alter 1-10/, ss=&#39;H&#39;</code>Set No.1 - No.10 amino acids to “alpha-helix” style in PyMOL </p>
-<h2 id="Side-chain-dihedrals"><a href="#Side-chain-dihedrals" class="headerlink" title="Side-chain dihedrals"></a>Side-chain dihedrals</h2><p>![](Biochemistry Terms.assets&#x2F;1754973218787-55dd3aa0-9739-4689-ab32-ab46f5b392ca.png)</p>
-<h2 id="Hydrogen-and-disulfide-bonds"><a href="#Hydrogen-and-disulfide-bonds" class="headerlink" title="Hydrogen and disulfide bonds"></a>Hydrogen and disulfide bonds</h2><p>![](Biochemistry Terms.assets&#x2F;1754973265835-93ed4e94-4407-40d7-82e8-59047cf2a02b.png)</p>
+<h2 id="Side-chain-dihedrals"><a href="#Side-chain-dihedrals" class="headerlink" title="Side-chain dihedrals"></a>Side-chain dihedrals</h2><p>![](Biochemistry Terms&#x2F;1754973218787-55dd3aa0-9739-4689-ab32-ab46f5b392ca.png)</p>
+<h2 id="Hydrogen-and-disulfide-bonds"><a href="#Hydrogen-and-disulfide-bonds" class="headerlink" title="Hydrogen and disulfide bonds"></a>Hydrogen and disulfide bonds</h2><p>![](Biochemistry Terms&#x2F;1754973265835-93ed4e94-4407-40d7-82e8-59047cf2a02b.png)</p>
 <h2 id="Ambiguous-Hydrogen"><a href="#Ambiguous-Hydrogen" class="headerlink" title="Ambiguous Hydrogen"></a>Ambiguous Hydrogen</h2><p>For certain amino acids, the position of a hydrogen atom can be ambiguous due to the symmetry of the sidechain or because the sidechain can adopt different rotamers. </p>
 <h2 id="α-helix-3-6-13-helix"><a href="#α-helix-3-6-13-helix" class="headerlink" title="α-helix (3.6&#x2F;13-helix)"></a>α-helix (3.6&#x2F;13-helix)</h2><p>螺旋周期约为3.6个氨基酸残基，即每3.6个残基螺旋上升一圈，</p>
 <p>Spiral period is 3.6 residues, that is, the spiral rises a turn every 3.6 residues</p>
 <p>Average atoms per turn: 13</p>
 <p>Pitch: ~ 5.4 Å</p>
 <p>Rise per residue: ~ 1.5  Å</p>
-<p>![](Biochemistry Terms.assets&#x2F;1756435907598-6470fa11-abb6-44da-9d1b-ddd33901a430.png)</p>
-<p>![](Biochemistry Terms.assets&#x2F;1756439552780-1d7e62a4-703e-4cb1-aeaa-a5031dbe8644.png)</p>
+<p>![](Biochemistry Terms&#x2F;1756435907598-6470fa11-abb6-44da-9d1b-ddd33901a430.png)</p>
+<p>![](Biochemistry Terms&#x2F;1756439552780-1d7e62a4-703e-4cb1-aeaa-a5031dbe8644.png)</p>
 <p>The [Peptide bond surfaces] are approximately parallel to the central axis of the helix, and the common direction of all the peptide bonds makes the whole α-helix a macro dipole, with the N-terminus ~ + 0.5 e and the C terminus ~ - 0.5 e.</p>
 <h3 id="Crick-equation-for-α-helix"><a href="#Crick-equation-for-α-helix" class="headerlink" title="Crick equation for α-helix"></a>Crick equation for α-helix</h3><h4 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h4><p>Crick equation describes the geometry of one helix of helices (one helix in a super helix).</p>
 <h4 id="Major-Parameters"><a href="#Major-Parameters" class="headerlink" title="Major Parameters"></a>Major Parameters</h4><ol>
@@ -165,7 +166,7 @@
 <li><p><strong>The helical frequency (ω1)</strong>: α-helix curvature, coupled to  ω0, for an ideal  α-helix, ω0+ω1&#x3D;100°</p>
 </li>
 </ol>
-<h4 id="The-equation"><a href="#The-equation" class="headerlink" title="The equation"></a>The equation</h4><p>![](Biochemistry Terms.assets&#x2F;1756437767710-5f26396a-ee38-4e50-bd94-9327b2cb1eb1.png)</p>
+<h4 id="The-equation"><a href="#The-equation" class="headerlink" title="The equation"></a>The equation</h4><p>![](Biochemistry Terms&#x2F;1756437767710-5f26396a-ee38-4e50-bd94-9327b2cb1eb1.png)</p>
 <h3 id="Parameters-in-Rosetta"><a href="#Parameters-in-Rosetta" class="headerlink" title="Parameters in Rosetta"></a>Parameters in Rosetta</h3><p><a href="https://docs.rosettacommons.org/docs/latest/scripting_documentation/RosettaScripts/Movers/movers_pages/MakeBundleMover">MakeBundle</a></p>
 <h2 id="3-10-helix"><a href="#3-10-helix" class="headerlink" title="3&#x2F;10-helix"></a>3&#x2F;10-helix</h2><p>Not discussed here</p>
 <h2 id="π-helix"><a href="#π-helix" class="headerlink" title="π-helix"></a>π-helix</h2><p>Not discussed here</p>
@@ -577,12 +578,12 @@
     <content><![CDATA[<h1 id="PyRosetta-13-Constraint-Generator"><a href="#PyRosetta-13-Constraint-Generator" class="headerlink" title="PyRosetta (13): Constraint Generator"></a>PyRosetta (13): Constraint Generator</h1><h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><h3 id="Constraint-functions"><a href="#Constraint-functions" class="headerlink" title="Constraint functions"></a>Constraint functions</h3><h4 id="Harmonic-HARMONIC"><a href="#Harmonic-HARMONIC" class="headerlink" title="Harmonic: HARMONIC"></a>Harmonic: <code>HARMONIC</code></h4><p>A harmonic constraint uses a simple parabola (a squared function) to apply a penalty. </p>
 <p><img src="https://cdn.nlark.com/yuque/0/2025/gif/32767990/1756801826076-cb2bdec1-c6cc-4207-97cd-81cb505c5e28.gif">$ E&#x3D;(\frac{x−x_0}{\sigma})^2 $</p>
 <p> where $ \sigma $is a force constant, $ x $ is the measured value, and $ x_0 $ is the ideal value. </p>
-<p>![](PyRosetta (13) Constraint Generator Movers.assets&#x2F;1756802935061-72f8eb91-7309-4f80-81b3-c20f109b7a73.png)</p>
+<p>![](PyRosetta (13) Constraint Generator Movers&#x2F;1756802935061-72f8eb91-7309-4f80-81b3-c20f109b7a73.png)</p>
 <h4 id="Bounded-Flat-harmonic-FLAT-HARMONIC"><a href="#Bounded-Flat-harmonic-FLAT-HARMONIC" class="headerlink" title="Bounded (Flat harmonic: FLAT_HARMONIC)"></a>Bounded (Flat harmonic: <code>FLAT_HARMONIC</code>)</h4><p>A bounded constraint defines a flat-bottomed energy well. It has two key parameters: a minimum bound $ lb &#x3D; x_0 - t $ and a maximum bound $ ub &#x3D; x_0 + t $.</p>
 <p>Similar to <code>HARMONIC</code>, but is 0 (“flat”) around $ \pm $tolerance (t).</p>
 <p>$ E&#x3D;  (\frac{x−x_0}{\sigma})^2 - (\frac{t}{\sigma})^2, \ x\ge x_0 + t \ \text{or} \ x\le x_0 -t $</p>
 <p>$ E &#x3D; 0, \ x_0 - t \le x \le x_0 + t $</p>
-<p>![](PyRosetta (13) Constraint Generator Movers.assets&#x2F;1756802945356-1aba79e7-063a-4e4a-87de-818d86d4d6e0-1757296044272-5.png)</p>
+<p>![](PyRosetta (13) Constraint Generator Movers&#x2F;1756802945356-1aba79e7-063a-4e4a-87de-818d86d4d6e0-1757296044272-5.png)</p>
 <p>If the measured value $ x $ is within the bounds ($ lb\le x\le ub\ $), the energy penalty is 0.</p>
 <p>If the measured value is outside the bounds $ x&lt;lb $ or $ x&gt;ub $, a penalty is applied that increases with the deviation, often harmonically.</p>
 <p>Behavior: Instead of a “spring”, it creates a “box” or “well”. Any conformation within the specified range is considered equally good and incurs no penalty. Only when the conformation leaves this range is it penalized.</p>

@@ -112,12 +112,12 @@
   <h1 id="PyRosetta-13-Constraint-Generator"><a href="#PyRosetta-13-Constraint-Generator" class="headerlink" title="PyRosetta (13): Constraint Generator"></a>PyRosetta (13): Constraint Generator</h1><h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><h3 id="Constraint-functions"><a href="#Constraint-functions" class="headerlink" title="Constraint functions"></a>Constraint functions</h3><h4 id="Harmonic-HARMONIC"><a href="#Harmonic-HARMONIC" class="headerlink" title="Harmonic: HARMONIC"></a>Harmonic: <code>HARMONIC</code></h4><p>A harmonic constraint uses a simple parabola (a squared function) to apply a penalty. </p>
 <p><img src="https://cdn.nlark.com/yuque/0/2025/gif/32767990/1756801826076-cb2bdec1-c6cc-4207-97cd-81cb505c5e28.gif">$ E&#x3D;(\frac{x−x_0}{\sigma})^2 $</p>
 <p> where $ \sigma $is a force constant, $ x $ is the measured value, and $ x_0 $ is the ideal value. </p>
-<p>![](PyRosetta (13) Constraint Generator Movers.assets&#x2F;1756802935061-72f8eb91-7309-4f80-81b3-c20f109b7a73.png)</p>
+<p>![](PyRosetta (13) Constraint Generator Movers&#x2F;1756802935061-72f8eb91-7309-4f80-81b3-c20f109b7a73.png)</p>
 <h4 id="Bounded-Flat-harmonic-FLAT-HARMONIC"><a href="#Bounded-Flat-harmonic-FLAT-HARMONIC" class="headerlink" title="Bounded (Flat harmonic: FLAT_HARMONIC)"></a>Bounded (Flat harmonic: <code>FLAT_HARMONIC</code>)</h4><p>A bounded constraint defines a flat-bottomed energy well. It has two key parameters: a minimum bound $ lb &#x3D; x_0 - t $ and a maximum bound $ ub &#x3D; x_0 + t $.</p>
 <p>Similar to <code>HARMONIC</code>, but is 0 (“flat”) around $ \pm $tolerance (t).</p>
 <p>$ E&#x3D;  (\frac{x−x_0}{\sigma})^2 - (\frac{t}{\sigma})^2, \ x\ge x_0 + t \ \text{or} \ x\le x_0 -t $</p>
 <p>$ E &#x3D; 0, \ x_0 - t \le x \le x_0 + t $</p>
-<p>![](PyRosetta (13) Constraint Generator Movers.assets&#x2F;1756802945356-1aba79e7-063a-4e4a-87de-818d86d4d6e0-1757296044272-5.png)</p>
+<p>![](PyRosetta (13) Constraint Generator Movers&#x2F;1756802945356-1aba79e7-063a-4e4a-87de-818d86d4d6e0-1757296044272-5.png)</p>
 <p>If the measured value $ x $ is within the bounds ($ lb\le x\le ub\ $), the energy penalty is 0.</p>
 <p>If the measured value is outside the bounds $ x&lt;lb $ or $ x&gt;ub $, a penalty is applied that increases with the deviation, often harmonically.</p>
 <p>Behavior: Instead of a “spring”, it creates a “box” or “well”. Any conformation within the specified range is considered equally good and incurs no penalty. Only when the conformation leaves this range is it penalized.</p>
